@@ -1,11 +1,4 @@
 function res = E(test_pos,source_particle)
-% source_particle is a struct with attributes
-%   pos: [x; y; z]
-%   v: [vx; vy; vz]
-%   q: int
-% test_pos is the position [tx; ty; tz] of test charge
-% res is a column vector containing components of E-field
-
 q = source_particle.q;
 pos = source_particle.pos;
 
