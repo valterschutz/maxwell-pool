@@ -1,7 +1,7 @@
-PLOT_E = true;
-PLOT_B = false;
+PLOT_E = false;
+PLOT_B = true;
 E_SCALING = 2e-5;
-B_SCALING = 5e12;
+B_SCALING = 2e7;
 PAUSE_TIME = 0.01;
 DT = 0.1;
 T = 2;  % How long to run simulation
