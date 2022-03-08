@@ -1,12 +1,17 @@
-DT = 0.01;
-T = 10;
+DT = 0.1;
+T = 20;
 N_particles = 6;
 colors = ['r','g','b','c','m','y'];
+max_speed = 1;  % This corresponds to user entering 100% speed when aiming
 
 que_ball.m = 1 * eye(2);  % 1 kg
-que_ball.q = 1e-1 * eye(2);  % 100 mC
+que_ball.q = 0.1e-3 * eye(2);  % 0.1 mC
 que_ball.x = vector_to_multivector([0; 0; 0]);
-que_ball.v = vector_to_multivector([0.9; 0.4; 0.5]);
+que_ball.v = vector_to_multivector([0.05; 0.05; 0.05]);
+que_ball.color = 'k';
+que_ball.F = 0;  % No interacting fields
+que_ball.force = 0;  % No interacting forces
+que_ball.a = 0;  % Does not accelerate
 
 for k=1:N_particles
 %     particles(k) = struct;
@@ -20,9 +25,17 @@ end
 
 
 % Open file for writing animation
-myWriter = VideoWriter('videos/test');
-myWriter.FrameRate = 30;
-open(myWriter);
+% myWriter = VideoWriter('videos/test','MPEG-4');
+% myWriter.FrameRate = 30;
+% open(myWriter);
+
+% Plot initial positions
+fig = gcf;
+ax = gca;
+plot_particles([particles que_ball],ax)
+
+% Allow user to aim
+
 
 k = 1;
 for t=0:DT:T
@@ -41,33 +54,15 @@ for t=0:DT:T
     que_ball.v = vector_to_multivector(bounce_check(multivector_to_vector(que_ball.x), multivector_to_vector(que_ball.v)));
     que_ball.x = que_ball.x + que_ball.v*DT;
     
-    
-    % Plot cue ball and its shadows
-    plot3(real(que_ball.x(1,2)+que_ball.x(2,1))/2, imag(que_ball.x(2,1)-que_ball.x(1,2))/2, real(que_ball.x(1,1)-que_ball.x(2,2))/2, 'k.', 'markersize', 50), axis([0 1 0 1 0 1]), grid on, hold on, xlabel('x'), ylabel('y'), zlabel('z'), box on, hold on
-    plot3(real(que_ball.x(1,2)+que_ball.x(2,1))/2, imag(que_ball.x(2,1)-que_ball.x(1,2))/2, 0, 'o', 'markersize', 15, 'MarkerEdgeColor', 'k', 'MarkerFaceColor', [0.9 0.9 0.9])
-    plot3(real(que_ball.x(1,2)+que_ball.x(2,1))/2, 1, real(que_ball.x(1,1)-que_ball.x(2,2))/2, 'o', 'markersize', 15, 'MarkerEdgeColor', 'k', 'MarkerFaceColor', [0.9 0.9 0.9])
-    plot3(1, imag(que_ball.x(2,1)-que_ball.x(1,2))/2, real(que_ball.x(1,1)-que_ball.x(2,2))/2, 'o', 'markersize', 15, 'MarkerEdgeColor', 'k', 'MarkerFaceColor', [0.9 0.9 0.9])
-    
-    % Plot test charges and shadows
-    for j=1:N_particles
-        test_ball = particles(j);
-        color = particles(j).color;
-        plot3(real(test_ball.x(1,2)+test_ball.x(2,1))/2, imag(test_ball.x(2,1)-test_ball.x(1,2))/2, real(test_ball.x(1,1)-test_ball.x(2,2))/2, '.', 'Color', color, 'markersize', 50)
-        plot3(real(test_ball.x(1,2)+test_ball.x(2,1))/2, imag(test_ball.x(2,1)-test_ball.x(1,2))/2, 0, 'o', 'markersize', 15, 'MarkerEdgeColor', color, 'MarkerFaceColor', [0.9 0.9 0.9])
-        plot3(real(test_ball.x(1,2)+test_ball.x(2,1))/2, 1, real(test_ball.x(1,1)-test_ball.x(2,2))/2, 'o', 'markersize', 15, 'MarkerEdgeColor', color, 'MarkerFaceColor', [0.9 0.9 0.9])
-        plot3(1, imag(test_ball.x(2,1)-test_ball.x(1,2))/2, real(test_ball.x(1,1)-test_ball.x(2,2))/2, 'o', 'markersize', 15, 'MarkerEdgeColor', color, 'MarkerFaceColor', [0.9 0.9 0.9])
-    end
-    hold off
-    
-%     drawnow
+    plot_particles([particles que_ball],ax)
 %     view([k 25])
-    set(gca,'nextplot','replacechildren');
-    frame = getframe(gcf);
-    writeVideo(myWriter,frame);
-    k = k+1;
+%     set(gca,'nextplot','replacechildren');
+%     frame = getframe(gcf);
+%     writeVideo(myWriter,frame);
+%     k = k+1;
     fprintf("t = %.2f\n", t);
 end
 
-close(myWriter);
+% close(myWriter);
 
 
