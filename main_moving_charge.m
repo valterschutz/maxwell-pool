@@ -19,6 +19,9 @@ for k=1:N_particles
     particles(k).q = 1e-3 * eye(2);
     particles(k).x = vector_to_multivector(rand(3,1));
     particles(k).v = vector_to_multivector([0;0;0]);
+    particles(k).F = 0;  % No field in beginning
+    particles(k).force = 0;
+    particles(k).a = 0;
     particles(k).color = colors(k);
 end
 
@@ -58,6 +61,8 @@ while true
             aim = aim/norm(aim);
         case 32  % Spacebar
             break
+        otherwise
+            continue
     end
     
 end
