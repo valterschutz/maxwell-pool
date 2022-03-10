@@ -12,6 +12,7 @@ que_ball.color = 'k';
 que_ball.F = 0;  % No interacting fields
 que_ball.force = 0;  % No interacting forces
 que_ball.a = 0;  % Does not accelerate
+que_ball.p = 999;  % Reference to plot object
 
 for k=1:N_particles
 %     particles(k) = struct;
@@ -23,6 +24,7 @@ for k=1:N_particles
     particles(k).force = 0;
     particles(k).a = 0;
     particles(k).color = colors(k);
+    particles(k).p = 999;  % Reference to plot object
 end
 
 
@@ -45,7 +47,10 @@ Z_rot = [cos(theta) -sin(theta) 0; sin(theta) cos(theta) 0; 0 0 1];
 Z_rot_inv = [cos(-theta) -sin(-theta) 0; sin(-theta) cos(-theta) 0; 0 0 1];
 while true
     plot_particles(ax,[particles que_ball])
+    pause
     plot_aim(ax,que_ball,aim)
+%     ax = gca;
+%     info = rendererinfo(ax)
     disp("Waiting for input...")
     [~,~,button] = ginput(1);
     switch button
@@ -87,9 +92,13 @@ for t=0:DT:T
     que_ball.v = vector_to_multivector(bounce_check(multivector_to_vector(que_ball.x), multivector_to_vector(que_ball.v)));
     que_ball.x = que_ball.x + que_ball.v*DT;
     
-    plot_particles(ax,[particles que_ball])
+    replot_particles(ax,[particles que_ball])
+    pause(0.1)
+    drawnow
 %     view([k 25])
-%     set(gca,'nextplot','replacechildren');
+%     set(ax,'nextplot','replacechildren');
+%     set(ax,'DrawMode','fast') 
+%     set(ax,'EraseMode','none');
 %     frame = getframe(gcf);
 %     writeVideo(myWriter,frame);
 %     k = k+1;
