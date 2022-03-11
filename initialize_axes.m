@@ -6,6 +6,8 @@ ax.XGrid = 'on'; ax.YGrid = 'on'; ax.ZGrid = 'on';
 ax.XLabel.String = 'x'; ax.XLabel.FontSize = 12;
 ax.YLabel.String = 'y'; ax.YLabel.FontSize = 12;
 ax.ZLabel.String = 'z'; ax.ZLabel.FontSize = 12;
-ax.View = [45 45];
+ax.View = [-45 30];
+ax.Box = 'on';
+ax.Projection = 'perspective';
 end
 

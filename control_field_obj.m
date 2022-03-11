@@ -13,12 +13,13 @@ switch field_obj.type
 
         % Plot arrow representing aim
         pos = multivector_to_vector(field_obj.x);
-        hold on
+        hold(ax,'on')
         % Create a quiver object, updated later
         q = quiver3(ax,pos(1),pos(2),pos(3),aim(1),aim(2),aim(3),0.2,'k','LineWidth',2);
-        hold off
+        hold(ax,'off')
+        
         while true
-            p.UData = aim(1); p.VData = aim(2); p.WData = aim(3);
+            q.UData = aim(1); q.VData = aim(2); q.WData = aim(3);
             disp("Waiting for input...")
             [~,~,button] = ginput(1);
             switch button
@@ -41,7 +42,8 @@ switch field_obj.type
         end
         disp("Aim set!")
         strength = input("Hit strength (value between 0-100): "); 
-        field_obj.v = vector_to_multivector(strength/100*max_speed*aim);
+        field_obj.v = vector_to_multivector(strength/100*field_obj.max_speed*aim);
+        delete(q);
 end
 end
 

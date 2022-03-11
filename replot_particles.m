@@ -1,15 +1,25 @@
-function [] = replot_particles(ax,field_obj,particles)
+function [] = replot_particles(particles)
 %PLOT_PARTICLES replots particles in particles in axes ax
 %   Detailed explanation goes here
 
-replot_field_obj(field_obj);
-
 % Update particle positions and shadows
 for j=1:length(particles)
-    particle = particles(j);
-    particle.p.XData = real(particle.x(1,2)+particle.x(2,1))/2;
-    particle.p.YData = imag(particle.x(2,1)-particle.x(1,2))/2;
-    particle.p.ZData = real(particle.x(1,1)-particle.x(2,2))/2;
+    x = real(particles(j).x(1,2)+particles(j).x(2,1))/2;
+    y = imag(particles(j).x(2,1)-particles(j).x(1,2))/2;
+    z = real(particles(j).x(1,1)-particles(j).x(2,2))/2;
+
+    particles(j).p.XData = x;
+    particles(j).p.YData = y;
+    particles(j).p.ZData = z;
+
+    particles(j).px.YData = y;
+    particles(j).px.ZData = z;
+
+    particles(j).py.XData = x;
+    particles(j).py.ZData = z;
+
+    particles(j).pz.XData = x;
+    particles(j).pz.YData = y;
 end
 end
 

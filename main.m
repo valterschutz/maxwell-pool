@@ -28,8 +28,9 @@ end
 % myWriter.FrameRate = 30;
 % open(myWriter);
 
-% References to figure and axes
+% Create figure and axes
 fig = figure(1);
+clf(fig);
 ax = gca;
 ax = initialize_axes(ax);
 
@@ -43,11 +44,11 @@ field_obj = control_field_obj(ax,field_obj);
 k = 1;
 for t=0:DT:T
     % Update field object
-    field_obj = update_field_obj(field_obj);
+    field_obj = update_field_obj(field_obj,DT);
         
     % Update particles
     for j=1:N_particles
-        particles(j).F = F_from_field_obj(field_obj, particle);
+        particles(j).F = F_from_field_obj(field_obj, particles(j));
         F = particles(j).F; v = particles(j).v; q = particles(j).q;
         particles(j).force = q/2*(F+conj(F)+1/2*v*(conj(F)-F)+1/2*(F-conj(F))*v);
         particles(j).a = particles(j).force/particles(j).m;
@@ -67,7 +68,7 @@ for t=0:DT:T
 %     writeVideo(myWriter,frame);
 %     k = k+1;
     thing = multivector_to_vector(particles(1).x);
-    fprintf("t = %.2f, x = %.2f\n", t,thing(1));
+    fprintf("t = %.2f\n", t);
 end
 
 % close(myWriter);
