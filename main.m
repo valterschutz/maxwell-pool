@@ -1,9 +1,9 @@
 DT = 0.02;
 T = 20;
-N_particles = 6;  % Number of particles (does not include "cue ball")
+N_particles = 1;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_COLORS = ['r','g','b','c','m','y'];
 PARTICLE_MASS = 1;
-PARTICLE_CHARGE = 1e-3;
+PARTICLE_CHARGE = 5e-3;
 TYPE = "charge";
 
 field_obj = generate_field_obj(TYPE);
@@ -12,7 +12,8 @@ field_obj = generate_field_obj(TYPE);
 for k=1:N_particles
     particles(k).m = PARTICLE_MASS * eye(2);
     particles(k).q = PARTICLE_CHARGE * eye(2);
-    particles(k).x = vector_to_multivector(rand(3,1));
+%     particles(k).x = vector_to_multivector(rand(3,1));
+    particles(k).x = vector_to_multivector([0.7;0.7;0.7]);
     particles(k).v = vector_to_multivector([0;0;0]);
     particles(k).F = 0;  % No field in beginning
     particles(k).force = 0;
@@ -50,7 +51,7 @@ for t=0:DT:T
     for j=1:N_particles
         particles(j).F = F_from_field_obj(field_obj, particles(j));
         F = particles(j).F; v = particles(j).v; q = particles(j).q;
-        particles(j).force = q/2*(F+conj(F)+1/2*v*(conj(F)-F)+1/2*(F-conj(F))*v);
+        particles(j).force = q/2*(F+F'+1/2*v*(F'-F)+1/2*(F-F')*v);
         particles(j).a = particles(j).force/particles(j).m;
         particles(j).v = particles(j).v + particles(j).a * DT;
         particles(j).v = vector_to_multivector(bounce_check(multivector_to_vector(particles(j).x), multivector_to_vector(particles(j).v)));
