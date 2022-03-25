@@ -1,21 +1,24 @@
-DT = 0.02;
-T = 20;
-N_particles = 5;  % Number of particles (does not include "cue ball"). Up to 6.
+DT = 0.01;
+T = 5;
+N_particles = 1;  % Number of particles
 PARTICLE_COLORS = ['r','g','b','c','m','y'];
-PARTICLE_MASS = 1;
-PARTICLE_CHARGE = 5e-3;
-TYPE = "charge";
+PARTICLE_ORBITAL_RADII = [0.3,0.5,0.5,0.5,0.5,0.5];
+PARTICLE_ORBITAL_PERIODS = [1,1,1,1,1,1];
+PARTICLE_MASSES = [1e-3,1e-3,1e-3,1e-3,1e-3,1e-3];
+PARTICLE_CHARGES = [-1e-3,1,1,1,1,1];
+epsilon_0 = 8.8541878128e-12;
 
-% Initialize field object
-field_obj = generate_field_obj(TYPE);
+% Initialize field object in the middle, "sun"
+field_obj = generate_field_obj("charge");
 
 % Initialize particles
 for k=1:N_particles
-    particles(k).m = PARTICLE_MASS * eye(2);
-    particles(k).q = PARTICLE_CHARGE * eye(2);
-    particles(k).x = vector_to_multivector(rand(3,1));
-%     particles(k).x = vector_to_multivector([0.5;0.5;0.7]);
-    particles(k).v = vector_to_multivector([0;0;0]);
+    particles(k).m = PARTICLE_MASSES(k) * eye(2);
+    vy = 2*pi*PARTICLE_ORBITAL_RADII(k)/PARTICLE_ORBITAL_PERIODS(k);
+    particles(k).v = vector_to_multivector([0;vy;0]);
+    particles(k).q = -particles(k).m*eye(2)*16*pi^3*epsilon_0*PARTICLE_ORBITAL_RADII(k)^3/(field_obj.q*PARTICLE_ORBITAL_PERIODS(k)^2);
+    fprintf("k=%d, q_solar=%.5e\n",k,particles(k).q(1,1))
+    particles(k).x = vector_to_multivector([0.5+PARTICLE_ORBITAL_RADII(k);0.5;0.5]);
     particles(k).F = 0;  % No field in beginning
     particles(k).force = 0;
     particles(k).a = 0;
@@ -34,7 +37,7 @@ field_obj = plot_field_obj(ax,field_obj);
 particles = plot_particles(ax,particles);
 
 % Allow user to control field object
-field_obj = control_field_obj(ax,field_obj);
+% field_obj = control_field_obj(ax,field_obj);
 
 % Run the simulation
 run_simulation(field_obj,particles,T,DT)

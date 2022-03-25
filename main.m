@@ -2,8 +2,8 @@ DT = 0.02;
 T = 20;
 N_particles = 5;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_COLORS = ['r','g','b','c','m','y'];
-PARTICLE_MASS = 1;
-PARTICLE_CHARGE = 5e-3;
+PARTICLE_MASS = 1e-3;  % 1 kg
+PARTICLE_CHARGE = 1e-10;  % 10 nC
 TYPE = "charge";
 
 % Initialize field object

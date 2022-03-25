@@ -5,15 +5,7 @@ function F = F_from_field_obj(field_obj,particle)
 epsilon_0 = 8.8541878128e-12;
 switch field_obj.type
     case "charge"
-        % This does not give correct result
-        F = 1/(4*pi*sqrt(epsilon_0))*(particle.x-field_obj.x)*particle.q/((field_obj.x-particle.x)^2).^(3/4);
-
-        % Works but should be written in multivector style...
-%         x = multivector_to_vector(particle.x);
-%         y = multivector_to_vector(field_obj.x);
-%         q = field_obj.q(1,1);
-%         F = 1/(4*pi*sqrt(epsilon_0))*(x-y)*q/norm(x-y)^3;
-%         F = vector_to_multivector(F);
+        F = 1/(4*pi*sqrt(epsilon_0))*(particle.x-field_obj.x)*field_obj.q/((field_obj.x-particle.x)^2).^(3/4);
 end
 end
 
