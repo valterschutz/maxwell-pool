@@ -9,9 +9,9 @@ switch field_obj.type
         z = real(field_obj.x(1,1)-field_obj.x(2,2))/2;
         
         field_obj.p = plot3(ax,x,y,z, 'Marker','.', 'Color', field_obj.color, 'MarkerSize', 50);
-        field_obj.px = plot3(ax,1, y, z, 'Marker','o', 'MarkerSize', 10,'MarkerFaceColor',[0.8 0.8 0.8],'MarkerEdgeColor',field_obj.color);
-        field_obj.py = plot3(ax,x, 1, z, 'Marker','o', 'MarkerSize', 10,'MarkerFaceColor',[0.8 0.8 0.8],'MarkerEdgeColor',field_obj.color);
-        field_obj.pz = plot3(ax,x, y, 0, 'Marker','o', 'MarkerSize', 10,'MarkerFaceColor',[0.8 0.8 0.8],'MarkerEdgeColor',field_obj.color);
+%         field_obj.px = plot3(ax,1, y, z, 'Marker','o', 'MarkerSize', 10,'MarkerFaceColor',[0.8 0.8 0.8],'MarkerEdgeColor',field_obj.color);
+%         field_obj.py = plot3(ax,x, 1, z, 'Marker','o', 'MarkerSize', 10,'MarkerFaceColor',[0.8 0.8 0.8],'MarkerEdgeColor',field_obj.color);
+%         field_obj.pz = plot3(ax,x, y, 0, 'Marker','o', 'MarkerSize', 10,'MarkerFaceColor',[0.8 0.8 0.8],'MarkerEdgeColor',field_obj.color);
 end
 hold(ax,'off')
 end

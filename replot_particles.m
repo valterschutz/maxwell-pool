@@ -12,14 +12,14 @@ for j=1:length(particles)
     particles(j).p.YData = y;
     particles(j).p.ZData = z;
 
-    particles(j).px.YData = y;
-    particles(j).px.ZData = z;
-
-    particles(j).py.XData = x;
-    particles(j).py.ZData = z;
-
-    particles(j).pz.XData = x;
-    particles(j).pz.YData = y;
+%     particles(j).px.YData = y;
+%     particles(j).px.ZData = z;
+% 
+%     particles(j).py.XData = x;
+%     particles(j).py.ZData = z;
+% 
+%     particles(j).pz.XData = x;
+%     particles(j).pz.YData = y;
 end
 end
 
