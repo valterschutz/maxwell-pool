@@ -4,7 +4,7 @@ function field_obj = generate_field_obj(type)
 if type=="charge"
     field_obj.type = type;
     field_obj.m = 1 * eye(2);  % 1 kg
-    field_obj.q = 1e-3 * eye(2);  % 1 mC
+    field_obj.q = 1 * eye(2);  % 1 C
     field_obj.x = vector_to_multivector([0.5; 0.5; 0.5]);
     field_obj.v = vector_to_multivector([0; 0; 0]);
     field_obj.color = 'k';

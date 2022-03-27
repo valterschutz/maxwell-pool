@@ -1,5 +1,6 @@
 DT = 0.02;
 T = 20;
+BOUNCE_EPS = 0.05;
 N_particles = 5;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_COLORS = ['r','g','b','c','m','y'];
 PARTICLE_MASS = 1e-3;  % 1 kg
