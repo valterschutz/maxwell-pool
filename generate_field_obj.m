@@ -8,6 +8,7 @@ if type=="charge"
     field_obj.x = vector_to_multivector([0.5; 0.5; 0.5]);
     field_obj.v = vector_to_multivector([0; 0; 0]);
     field_obj.color = 'k';
+    field_obj.size=50;
     field_obj.max_speed = 1;  % This corresponds to user entering 100% speed when aiming
     field_obj.starting_aim = [1;0;0];
 %     field_obj.F = 0;  % No interacting fields

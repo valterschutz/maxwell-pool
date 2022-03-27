@@ -1,9 +1,9 @@
-DT = 0.02;
+DT = 0.01;
 T = 20;
-BOUNCE_EPS = 0.05;
+BOUNDS_EPS = 0.05;
 N_particles = 5;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_COLORS = ['r','g','b','c','m','y'];
-PARTICLE_MASS = 1e-3;  % 1 kg
+PARTICLE_MASS = 1;  % 1 kg
 PARTICLE_CHARGE = 1e-10;  % 10 nC
 TYPE = "charge";
 
@@ -21,6 +21,7 @@ for k=1:N_particles
     particles(k).force = 0;
     particles(k).a = 0;
     particles(k).color = PARTICLE_COLORS(k);
+    particles(k).size = 50;
     particles(k).p = 0;  % Reference to plot object
 end
 
@@ -38,4 +39,4 @@ particles = plot_particles(ax,particles);
 field_obj = control_field_obj(ax,field_obj);
 
 % Run the simulation
-run_simulation(field_obj,particles,T,DT)
+run_simulation(field_obj,particles,T,DT,BOUNDS_EPS)
