@@ -5,7 +5,7 @@ N_particles = 5;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_COLORS = ['r','g','b','c','m','y'];
 PARTICLE_MASS = 1;  % 1 kg
 PARTICLE_CHARGE = 1e-10;  % 10 nC
-TYPE = "charge";
+TYPE = "eDipole";  % Choose between "charge" and "eDipole"
 
 % Initialize field object
 field_obj = generate_field_obj(TYPE);

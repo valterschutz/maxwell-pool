@@ -6,7 +6,11 @@ epsilon_0 = 8.8541878128e-12;
 switch field_obj.type
     case "charge"
         F = 1/(4*pi*sqrt(epsilon_0))*(particle.x-field_obj.x)*field_obj.q/((particle.x-field_obj.x)^2).^(3/2);
-%         fprintf("|F| ~ %.2e\n",norm(multivector_to_vector(F)))
+    case "eDipole"
+        %field_obj.p is the dipolemoment.
+        R=particle.x-field_obj.x; %from dipole to testparticle
+        A=field_obj.d*R+R*field_obj.d; % 2 * field_obj.p DOTPRODUCT R
+        F=1/(4*pi*sqrt(epsilon_0)) * (3/2*(R)*(A)/((R^2).^(5/2))-field_obj.d/((R^2).^(3/2)));
 end
 end
 
