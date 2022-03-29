@@ -1,4 +1,4 @@
-function [] = run_simulation(field_obj,particles,T,dt,eps)
+function [] = run_simulation(field_obj,particles,T,dt)
 %RUN_SIMULATION Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -7,7 +7,7 @@ mu_0 = 1.25663706212e-6;
 
 for t=0:dt:T
     % Update field object
-    field_obj = update_field_obj(field_obj,dt,eps);
+    field_obj = update_field_obj(field_obj,dt);
         
     % Update particles
     for j=1:length(particles)
@@ -17,7 +17,7 @@ for t=0:dt:T
 %         fprintf("|force| ~ %.2e\n", norm(multivector_to_vector(particles(j).force)))
         particles(j).a = particles(j).force/particles(j).m;
         particles(j).v = particles(j).v + particles(j).a * dt;
-        particles(j).v = vector_to_multivector(bounce_check(multivector_to_vector(particles(j).x), multivector_to_vector(particles(j).v),eps));
+        particles(j).v = vector_to_multivector(bounce_check(multivector_to_vector(particles(j).x), multivector_to_vector(particles(j).v)));
         particles(j).x = particles(j).x + particles(j).v * dt;
 
 %         fprintf("|F| ~ %.2e, |force| ~ %.2e\n", norm(multivector_to_vector(F)), norm(multivector_to_vector(particles(j).force)))

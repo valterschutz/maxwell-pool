@@ -1,6 +1,5 @@
 DT = 0.01;
 T = 10;
-BOUNDS_EPS = 0.00;
 N_particles = 8;  % Number of particles
 particle_colors = ['r','g','b','c','m','r','g','c'];
 MAX_RADII = 0.45;
@@ -53,4 +52,4 @@ particles = plot_particles(ax,particles);
 % field_obj = control_field_obj(ax,field_obj);
 
 % Run the simulation
-run_simulation(field_obj,particles,T,DT, BOUNDS_EPS)
+run_simulation(field_obj,particles,T,DT)

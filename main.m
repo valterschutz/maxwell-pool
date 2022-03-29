@@ -1,6 +1,5 @@
 DT = 0.01;
-T = 20;
-BOUNDS_EPS = 0.05;
+T = 5;
 N_particles = 5;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_COLORS = ['r','g','b','c','m','y'];
 PARTICLE_MASS = 1;  % 1 kg
@@ -39,4 +38,4 @@ particles = plot_particles(ax,particles);
 field_obj = control_field_obj(ax,field_obj);
 
 % Run the simulation
-run_simulation(field_obj,particles,T,DT,BOUNDS_EPS)
+run_simulation(field_obj,particles,T,DT)
