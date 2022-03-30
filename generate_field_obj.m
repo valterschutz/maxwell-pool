@@ -1,6 +1,6 @@
 function field_obj = generate_field_obj(type)
 %GENERATE_FIELD_OBJ Returns a field object
-%   Types so far: "charge"
+%   Types so far: "charge", "eDipole
 if type=="charge"
     field_obj.type = type;
     field_obj.m = 1 * eye(2);  % 1 kg
@@ -12,6 +12,7 @@ if type=="charge"
     field_obj.max_speed = 1;  % This corresponds to user entering 100% speed when aiming
     field_obj.starting_aim = [1;0;0];
     field_obj.p = 0;  % Reference to plot object
+    field_obj.n_particles = 200;
 else if type=="eDipole"
     field_obj.type = type;
     field_obj.m = 1 * eye(2);  % 1 kg
@@ -22,7 +23,8 @@ else if type=="eDipole"
     field_obj.size = 1;
     field_obj.max_speed = 1;  % This corresponds to user entering 100% speed when aiming
     field_obj.starting_aim = [1;0;0];
-    field_obj.p = 0;  % Reference to plot object 
+    field_obj.p = 0;  % Reference to plot object
+    field_obj.n_particles = 6;
 end
 end
 
