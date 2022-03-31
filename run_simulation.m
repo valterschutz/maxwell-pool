@@ -26,7 +26,7 @@ for t=0:dt:T
     replot_particles(particles)  % Update particle positions
     replot_field_obj(field_obj)  % Update field object positioning
     drawnow
-    fprintf("T=%.2f\n",t)
+%     fprintf("T=%.2f\n",t)
 %     view([k 25])
 %     set(ax,'nextplot','replacechildren');
 %     set(ax,'DrawMode','fast') 

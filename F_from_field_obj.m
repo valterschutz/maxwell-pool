@@ -18,6 +18,10 @@ switch field_obj.type
         xp = particle.x; xp(3) = 0; xp = vector_to_multivector(xp);
         e3 = [1 0; 0 -1];
         I = field_obj.current;
+        
+        % Define the outer product for a vector u and bivector v
+        outer_product = @(u,v) 1/2*(u*v-v*u);
+
         F = sqrt(mu_0)*I/(2*pi)*outer_product(e3,xp-field_obj.x)/(xp-field_obj.x)^2;
 end
 end

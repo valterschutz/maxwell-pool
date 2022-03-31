@@ -5,7 +5,7 @@ switch type
     case "charge"
         field_obj.type = type;
         field_obj.m = 1 * eye(2);  % 1 kg
-        field_obj.q = 1 * eye(2);  % 1 C
+        field_obj.q = 1e-3 * eye(2);  % 1 nC
         field_obj.x = vector_to_multivector([0.5; 0.5; 0.5]);
         field_obj.v = vector_to_multivector([0; 0; 0]);
         field_obj.color = 'k';
@@ -13,11 +13,11 @@ switch type
         field_obj.max_speed = 1;  % This corresponds to user entering 100% speed when aiming
         field_obj.starting_aim = [1;0;0];
         field_obj.p = 0;  % Reference to plot object
-        field_obj.n_particles = 200;
+        field_obj.n_particles = 10;
     case "eDipole"
         field_obj.type = type;
         field_obj.m = 1 * eye(2);  % 1 kg
-        field_obj.d = 0.01 * vector_to_multivector([1; 0; 0]);  % 0.01 C
+        field_obj.d = 0.1e-3 * vector_to_multivector([1; 0; 0]);  % 0.1 mC
         field_obj.x = vector_to_multivector([0.5; 0.5; 0.5]);
         field_obj.v = vector_to_multivector([0; 0; 0]);
         field_obj.color = 'k';

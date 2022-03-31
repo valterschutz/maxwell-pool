@@ -1,9 +1,9 @@
-DT = 0.02;
+DT = 0.01;
 T = 5;
 N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 10 nC
-TYPE = "current";  % Choose between "charge" and "eDipole", "current"
+TYPE = "charge";  % Choose between "charge" and "eDipole", "current"
 
 % Initialize field object
 field_obj = generate_field_obj(TYPE);
