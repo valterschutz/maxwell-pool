@@ -1,9 +1,9 @@
 DT = 0.02;
 T = 5;
 N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
-PARTICLE_MASS = 1;  % 1 kg
+PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 10 nC
-TYPE = "charge";  % Choose between "charge" and "eDipole"
+TYPE = "current";  % Choose between "charge" and "eDipole", "current"
 
 % Initialize field object
 field_obj = generate_field_obj(TYPE);
@@ -25,7 +25,6 @@ end
 switch TYPE
     case "charge"
         for k=1:field_obj.n_particles
-%             PARTICLE_COLORS = ['r','g','b','c','m','y'];
             cmap = hsv(field_obj.n_particles);
             particles(k).x = vector_to_multivector(rand(3,1));
             particles(k).color = cmap(k,:);
@@ -43,6 +42,17 @@ switch TYPE
         particles(5).color = "b";
         particles(6).x = vector_to_multivector([0.5,0.2,0.5]);
         particles(6).color = "b";
+    case "current"
+        particles(1).x = vector_to_multivector([0.9,0.5,0.5]);
+        particles(1).v = vector_to_multivector([0,0,0]);
+        particles(1).color = "c";
+        particles(2).x = vector_to_multivector([0.9,0.5,0.5]);
+        particles(2).v = vector_to_multivector([-1,0,0]);
+        particles(2).color = "r";
+        particles(3).x = vector_to_multivector([0.9,0.5,0.5]);
+        particles(3).v = vector_to_multivector([-1,0,0]);
+        particles(3).q = -particles(3).q;
+        particles(3).color = "b";
 end
 
 
@@ -57,7 +67,7 @@ field_obj = plot_field_obj(ax,field_obj);
 particles = plot_particles(ax,particles);
 
 % Allow user to control field object
-% field_obj = control_field_obj(ax,field_obj);
+field_obj = control_field_obj(ax,field_obj);
 
 % Run the simulation
 run_simulation(field_obj,particles,T,DT)
