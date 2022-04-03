@@ -4,6 +4,9 @@ N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 10 nC
 TYPE = "charge";  % Choose between "charge" and "eDipole", "current"
+PLOT_F = false;
+PLOT_E = false;
+PLOT_B = false;
 
 % Initialize field object
 field_obj = generate_field_obj(TYPE);
@@ -70,4 +73,4 @@ particles = plot_particles(ax,particles);
 field_obj = control_field_obj(ax,field_obj);
 
 % Run the simulation
-run_simulation(field_obj,particles,T,DT)
+run_simulation(field_obj,particles,T,DT,PLOT_E,PLOT_B)
