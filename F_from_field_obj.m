@@ -6,9 +6,11 @@ epsilon_0 = 8.8541878128e-12;
 mu_0 = 1.25663706212e-6;  % H/m
 switch field_obj.type
     case "charge"
+        x = vector_to_multivector(x);
         F = 1/(4*pi*sqrt(epsilon_0))*(x-field_obj.x)*field_obj.q/((x-field_obj.x)^2).^(3/2);
     case "eDipole"
         %field_obj.p is the dipolemoment.
+        x = vector_to_multivector(x);
         R=x-field_obj.x; %from dipole to testparticle
         A=field_obj.d*R+R*field_obj.d; % 2 * field_obj.p DOTPRODUCT R
         F=1/(4*pi*sqrt(epsilon_0)) * (3/2*(R)*(A)/((R^2).^(5/2))-field_obj.d/((R^2).^(3/2)));

@@ -4,9 +4,9 @@ function [] = replot_particles(particles)
 
 % Update particle positions and shadows
 for j=1:length(particles)
-    x = real(particles(j).x(1,2)+particles(j).x(2,1))/2;
-    y = imag(particles(j).x(2,1)-particles(j).x(1,2))/2;
-    z = real(particles(j).x(1,1)-particles(j).x(2,2))/2;
+    x = particles(j).x(1);
+    y = particles(j).x(2);
+    z = particles(j).x(3);
 
     particles(j).p.XData = x;
     particles(j).p.YData = y;

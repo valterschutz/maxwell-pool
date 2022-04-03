@@ -12,12 +12,12 @@ for t=0:dt:T
     % Update particles
     for j=1:length(particles)
         particles(j).F = F_from_field_obj(field_obj, particles(j).x);
-        F = particles(j).F; v = particles(j).v; q = particles(j).q;
-        particles(j).force = q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v-v*(F-F')));
-%         fprintf("|force| ~ %.2e\n", norm(multivector_to_vector(particles(j).force)))
+        F = particles(j).F; v = vector_to_multivector(particles(j).v); q = particles(j).q;
+
+        particles(j).force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v-v*(F-F'))));
         particles(j).a = particles(j).force/particles(j).m;
         particles(j).v = particles(j).v + particles(j).a * dt;
-        particles(j).v = vector_to_multivector(bounce_check(multivector_to_vector(particles(j).x), multivector_to_vector(particles(j).v)));
+        particles(j).v = bounce_check(particles(j).x, particles(j).v);
         particles(j).x = particles(j).x + particles(j).v * dt;
 
 %         fprintf("|F| ~ %.2e, |force| ~ %.2e\n", norm(multivector_to_vector(F)), norm(multivector_to_vector(particles(j).force)))
@@ -25,11 +25,6 @@ for t=0:dt:T
     
     replot_particles(particles)  % Update particle positions
     replot_field_obj(field_obj)  % Update field object positioning
-
-    % Plot fields
-%     if plot_F
-% %         F = F_from_field_obj(field_obj,
-%     end
 
     drawnow
     fprintf("T=%.2f\n",t)

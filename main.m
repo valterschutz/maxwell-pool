@@ -13,12 +13,12 @@ field_obj = generate_field_obj(TYPE);
 
 % Initialize particles, except position
 for k=1:field_obj.n_particles
-    particles(k).m = PARTICLE_MASS * eye(2);
-    particles(k).q = PARTICLE_CHARGE * eye(2);
-    particles(k).v = vector_to_multivector([0;0;0]);
-    particles(k).F = 0;  % No field in beginning
-    particles(k).force = 0;
-    particles(k).a = 0;
+    particles(k).m = PARTICLE_MASS;
+    particles(k).q = PARTICLE_CHARGE;
+    particles(k).v = [0;0;0];
+    particles(k).F = 0 * eye(2);  % No field in beginning
+    particles(k).force = [0; 0; 0];
+    particles(k).a = [0;0;0];
     
     particles(k).size = 50;
     particles(k).p = 0;  % Reference to plot object
@@ -29,31 +29,31 @@ switch TYPE
     case "charge"
         for k=1:field_obj.n_particles
             cmap = hsv(field_obj.n_particles);
-            particles(k).x = vector_to_multivector(rand(3,1));
+            particles(k).x = rand(3,1);
             particles(k).color = cmap(k,:);
         end
     case "eDipole"
-        particles(1).x = vector_to_multivector([0.2,0.5,0.5]);
+        particles(1).x = [0.2,0.5,0.5];
         particles(1).color = "r";
-        particles(2).x = vector_to_multivector([0.5,0.5,0.8]);
+        particles(2).x = [0.5,0.5,0.8];
         particles(2).color = "b";
-        particles(3).x = vector_to_multivector([0.5,0.5,0.2]);
+        particles(3).x = [0.5,0.5,0.2];
         particles(3).color = "b";
-        particles(4).x = vector_to_multivector([0.8,0.5,0.5]);
+        particles(4).x = [0.8,0.5,0.5];
         particles(4).color = "c";
-        particles(5).x = vector_to_multivector([0.5,0.8,0.5]);
+        particles(5).x = [0.5,0.8,0.5];
         particles(5).color = "b";
-        particles(6).x = vector_to_multivector([0.5,0.2,0.5]);
+        particles(6).x = [0.5,0.2,0.5];
         particles(6).color = "b";
     case "current"
-        particles(1).x = vector_to_multivector([0.9,0.5,0.5]);
-        particles(1).v = vector_to_multivector([0,0,0]);
+        particles(1).x = [0.9,0.5,0.5];
+        particles(1).v = [0,0,0];
         particles(1).color = "c";
-        particles(2).x = vector_to_multivector([0.9,0.5,0.5]);
-        particles(2).v = vector_to_multivector([-1,0,0]);
+        particles(2).x = [0.9,0.5,0.5];
+        particles(2).v = [-1,0,0];
         particles(2).color = "r";
-        particles(3).x = vector_to_multivector([0.9,0.5,0.5]);
-        particles(3).v = vector_to_multivector([-1,0,0]);
+        particles(3).x = [0.9,0.5,0.5];
+        particles(3).v = [-1,0,0];
         particles(3).q = -particles(3).q;
         particles(3).color = "b";
 end
