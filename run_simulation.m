@@ -20,7 +20,7 @@ for t=0:dt:T
         particles(j).v = bounce_check(particles(j).x, particles(j).v);
         particles(j).x = particles(j).x + particles(j).v * dt;
 
-%         fprintf("|F| ~ %.2e, |force| ~ %.2e\n", norm(multivector_to_vector(F)), norm(multivector_to_vector(particles(j).force)))
+        fprintf("|F| ~ %.2e, |force| ~ %.2e\n", norm(multivector_to_vector(F)), norm(particles(j).force));
     end
     
     replot_particles(particles)  % Update particle positions
