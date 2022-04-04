@@ -7,24 +7,27 @@ mu_0 = 1.25663706212e-6;  % H/m
 switch field_obj.type
     case "charge"
         x = vector_to_multivector(x);
-        F = 1/(4*pi*sqrt(epsilon_0))*(x-field_obj.x)*field_obj.q/((x-field_obj.x)^2).^(3/2);
+        y = vector_to_multivector(field_obj.x);
+        q = field_obj.q;
+        F = 1/(4*pi*sqrt(epsilon_0))*(x-y)*q/((x-y)^2).^(3/2);
     case "eDipole"
         %field_obj.p is the dipolemoment.
-        x = vector_to_multivector(x);
-        R=x-field_obj.x; %from dipole to testparticle
-        A=field_obj.d*R+R*field_obj.d; % 2 * field_obj.p DOTPRODUCT R
-        F=1/(4*pi*sqrt(epsilon_0)) * (3/2*(R)*(A)/((R^2).^(5/2))-field_obj.d/((R^2).^(3/2)));
+        d = vector_to_multivector(field_obj.d);
+        R=vector_to_multivector(x-field_obj.x); %from dipole to testparticle
+        A=d*R+R*d; % 2 * field_obj.p DOTPRODUCT R
+        F=1/(4*pi*sqrt(epsilon_0)) * (3/2*(R)*(A)/((R^2).^(5/2))-d/((R^2).^(3/2)));
     case "current"
         % First calculate where particle position is in xy-plane, call this
         % xp
         xp = x; xp(3) = 0; xp = vector_to_multivector(xp);
+        y = vector_to_multivector(field_obj.x);
         e3 = [1 0; 0 -1];
         I = field_obj.current;
         
         % Define the outer product for a vector u and bivector v
         outer_product = @(u,v) 1/2*(u*v-v*u);
 
-        F = sqrt(mu_0)*I/(2*pi)*outer_product(e3,xp-field_obj.x)/(xp-field_obj.x)^2;
+        F = sqrt(mu_0)*I/(2*pi)*outer_product(e3,xp-y)/(xp-y)^2;
 end
 end
 

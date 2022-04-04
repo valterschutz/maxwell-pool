@@ -2,8 +2,8 @@ function [] = run_simulation(field_obj,particles,T,dt,plot_E,plot_B,plot_F)
 
 epsilon_0 = 8.8541878128e-12;
 mu_0 = 1.25663706212e-6;
-x = linspace(0,1,20); y = linspace(0,1,20); z = linspace(0,1,20);
-[X,Y,Z] = meshgrid(x,y,z);
+% x = linspace(0,1,20); y = linspace(0,1,20); z = linspace(0,1,20);
+% [X,Y,Z] = meshgrid(x,y,z);
 
 for t=0:dt:T
     % Update field object

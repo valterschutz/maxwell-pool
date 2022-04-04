@@ -1,9 +1,10 @@
+clf, clearvars, clc
 DT = 0.01;
 T = 5;
-N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
+% N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 10 nC
-TYPE = "charge";  % Choose between "charge" and "eDipole", "current"
+TYPE = "current";  % Choose between "charge" and "eDipole", "current"
 PLOT_F = false;
 PLOT_E = false;
 PLOT_B = false;
@@ -33,27 +34,25 @@ switch TYPE
             particles(k).color = cmap(k,:);
         end
     case "eDipole"
-        particles(1).x = [0.2,0.5,0.5];
-        particles(1).color = "r";
-        particles(2).x = [0.5,0.5,0.8];
+        particles(1).x = [0.5;0.5;0.8];
+        particles(1).color = "b";
+        particles(2).x = [0.5;0.5;0.2];
         particles(2).color = "b";
-        particles(3).x = [0.5,0.5,0.2];
-        particles(3).color = "b";
-        particles(4).x = [0.8,0.5,0.5];
-        particles(4).color = "c";
-        particles(5).x = [0.5,0.8,0.5];
+        particles(3).x = [0.8;0.5;0.5];
+        particles(3).color = "c";
+        particles(4).x = [0.5;0.8;0.5];
+        particles(4).color = "b";
+        particles(5).x = [0.5;0.2;0.5];
         particles(5).color = "b";
-        particles(6).x = [0.5,0.2,0.5];
-        particles(6).color = "b";
     case "current"
-        particles(1).x = [0.9,0.5,0.5];
-        particles(1).v = [0,0,0];
+        particles(1).x = [0.9;0.5;0.5];
+        particles(1).v = [0;0;0];
         particles(1).color = "c";
-        particles(2).x = [0.9,0.5,0.5];
-        particles(2).v = [-1,0,0];
+        particles(2).x = [0.9;0.5;0.5];
+        particles(2).v = [-1;0;0];
         particles(2).color = "r";
-        particles(3).x = [0.9,0.5,0.5];
-        particles(3).v = [-1,0,0];
+        particles(3).x = [0.9;0.5;0.5];
+        particles(3).v = [-1;0;0];
         particles(3).q = -particles(3).q;
         particles(3).color = "b";
 end

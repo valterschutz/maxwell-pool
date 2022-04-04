@@ -12,7 +12,7 @@ switch field_obj.type
         Z_rot_inv = [cos(-theta) -sin(-theta) 0; sin(-theta) cos(-theta) 0; 0 0 1];
 
         % Plot arrow representing aim
-        pos = multivector_to_vector(field_obj.x);
+        pos = field_obj.x;
         hold(ax,'on')
         % Create a quiver object, updated later
         q = quiver3(ax,pos(1),pos(2),pos(3),aim(1),aim(2),aim(3),0.2,'k','LineWidth',2);
@@ -42,7 +42,7 @@ switch field_obj.type
         end
         disp("Aim set!")
         strength = input("Hit strength (value between 0-100): "); 
-        field_obj.v = vector_to_multivector(strength/100*field_obj.max_speed*aim);
+        field_obj.v = strength/100*field_obj.max_speed*aim;
         delete(q);
 end
 end
