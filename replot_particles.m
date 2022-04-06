@@ -8,9 +8,11 @@ for j=1:length(particles)
     y = particles(j).x(2);
     z = particles(j).x(3);
 
-    particles(j).p.XData = x;
-    particles(j).p.YData = y;
-    particles(j).p.ZData = z;
+%     particles(j).p.XData = x;
+%     particles(j).p.YData = y;
+%     particles(j).p.ZData = z;
+    hold on
+    particles(j).p = plot3(x, y, z, 'Marker','.', 'Color', particles(j).color, 'MarkerSize', particles(j).size);
 
 %     particles(j).px.YData = y;
 %     particles(j).px.ZData = z;

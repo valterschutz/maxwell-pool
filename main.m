@@ -1,6 +1,6 @@
 clf, clearvars, clc
-DT = 0.01;
-T = 3;
+DT = 0.1;
+T = 300;
 % N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 10 nC
@@ -21,7 +21,7 @@ for k=1:field_obj.n_particles
     particles(k).force = [0; 0; 0];
     particles(k).a = [0;0;0];
     
-    particles(k).size = 50;
+    particles(k).size = 10;
     particles(k).p = 0;  % Reference to plot object
 end
 
@@ -45,16 +45,16 @@ switch TYPE
         particles(5).x = [0.5;0.2;0.5];
         particles(5).color = "b";
     case "current"
-        particles(1).x = [0.7;0.5;0.5];
-        particles(1).v = [0;0;0];
+        particles(1).x = [0.9;0.5;0.1];
+        particles(1).v = [0;0;0.01];
         particles(1).color = "c";
-        particles(2).x = [0.7;0.5;0.5];
-        particles(2).v = [-1;0;0];
-        particles(2).color = "r";
-        particles(3).x = [0.7;0.5;0.5];
-        particles(3).v = [-1;0;0];
-        particles(3).q = -particles(3).q;
-        particles(3).color = "b";
+%         particles(2).x = [0.7;0.5;0.5];
+%         particles(2).v = [-1;0;0];
+%         particles(2).color = "r";
+%         particles(3).x = [0.7;0.5;0.5];
+%         particles(3).v = [-1;0;0];
+%         particles(3).q = -particles(3).q;
+%         particles(3).color = "b";
 end
 
 
@@ -70,6 +70,8 @@ particles = plot_particles(ax,particles);
 
 % Allow user to control field object
 field_obj = control_field_obj(ax,field_obj);
+
+view(0,0)
 
 % Run the simulation
 run_simulation(field_obj,particles,T,DT,PLOT_E,PLOT_B)
