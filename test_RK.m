@@ -1,13 +1,10 @@
 clf, clearvars, clc
-DT = 0.2;
-T = 120;
+DT = 0.1;
+T = 300;
 % N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 10 nC
 TYPE = "current";  % Choose between "charge" and "eDipole", "current"
-PLOT_F = false;
-PLOT_E = false;
-PLOT_B = false;
 
 % Initialize field object
 field_obj = generate_field_obj(TYPE);
@@ -48,13 +45,6 @@ switch TYPE
         particles(1).x = [0.9;0.5;0.1];
         particles(1).v = [0;0;0.01];
         particles(1).color = "c";
-%         particles(2).x = [0.7;0.5;0.5];
-%         particles(2).v = [-1;0;0];
-%         particles(2).color = "r";
-%         particles(3).x = [0.7;0.5;0.5];
-%         particles(3).v = [-1;0;0];
-%         particles(3).q = -particles(3).q;
-%         particles(3).color = "b";
 end
 
 
@@ -64,18 +54,6 @@ clf(fig);
 ax = gca;
 ax = initialize_axes(ax);
 
-% Plot stuff
-view(0,0)
-title(ax,"Innan")
-
 % Plot particles and field object
 field_obj = plot_field_obj(ax,field_obj);
 particles = plot_particles(ax,particles);
-
-% Allow user to control field object
-field_obj = control_field_obj(ax,field_obj);
-
-
-
-% Run the simulation
-run_simulation_RK(field_obj,particles,T,DT)
