@@ -1,4 +1,4 @@
-function [] = replot_particles(particles)
+function replot_particles(particles)
 %PLOT_PARTICLES replots particles in particles in axes ax
 %   Detailed explanation goes here
 
@@ -8,12 +8,12 @@ for j=1:length(particles)
     y = particles(j).x(2);
     z = particles(j).x(3);
 
-%     particles(j).p.XData = x;
-%     particles(j).p.YData = y;
-%     particles(j).p.ZData = z;
-    hold on
-    particles(j).p = plot3(x, y, z, 'Marker','.', 'Color', particles(j).color, 'MarkerSize', particles(j).size);
-
+    particles(j).p.XData = x;
+    particles(j).p.YData = y;
+    particles(j).p.ZData = z;
+%     hold on
+%     particles(j).p = plot3(x, y, z, 'Marker','.', 'Color', particles(j).color, 'MarkerSize', particles(j).size);
+%     hold off
 %     particles(j).px.YData = y;
 %     particles(j).px.ZData = z;
 % 

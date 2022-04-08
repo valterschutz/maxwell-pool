@@ -4,9 +4,9 @@ function particles = plot_particles(ax,particles)
 hold(ax,'on');
 for j=1:length(particles)
     particle = particles(j);
-    x = particle.x(1);
-    y = particle.x(2);
-    z = particle.x(3);
+    x = particles(j).x(1);
+    y = particles(j).x(2);
+    z = particles(j).x(3);
     
     particles(j).p = plot3(ax,x, y, z, 'Marker','.', 'Color', particles(j).color, 'MarkerSize', particles(j).size);
 %     particles(j).px = plot3(ax,1, y, z, 'Marker','o', 'MarkerSize', 10,'MarkerFaceColor',[0.8 0.8 0.8],'MarkerEdgeColor',particles(j).color);

@@ -1,6 +1,6 @@
 clf, clearvars, clc
-DT = 0.01;
-T = 120;
+DT = 1;
+T = 100;
 % N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 10 nC
@@ -66,7 +66,7 @@ ax = initialize_axes(ax);
 
 % Plot stuff
 view(0,0)
-title(ax,"Efter")
+title(ax,['Euler forward, dt=' num2str(DT)])
 
 % Plot particles and field object
 field_obj = plot_field_obj(ax,field_obj);
@@ -78,4 +78,4 @@ field_obj = control_field_obj(ax,field_obj);
 
 
 % Run the simulation
-run_simulation_RK(field_obj,particles,T,DT)
+run_simulation(field_obj,particles,T,DT)
