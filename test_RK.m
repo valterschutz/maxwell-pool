@@ -1,59 +1,112 @@
-clf, clearvars, clc
-DT = 0.1;
-T = 300;
-% N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
-PARTICLE_MASS = 1e-3;  % 1 g
-PARTICLE_CHARGE = 1e-10;  % 10 nC
-TYPE = "current";  % Choose between "charge" and "eDipole", "current"
+%% Solve y'=y
+clearvars, clf
+dt = 0.1;
+T = 10;
 
-% Initialize field object
-field_obj = generate_field_obj(TYPE);
+t = 0:dt:10;
 
-% Initialize particles, except position
-for k=1:field_obj.n_particles
-    particles(k).m = PARTICLE_MASS;
-    particles(k).q = PARTICLE_CHARGE;
-    particles(k).v = [0;0;0];
-    particles(k).F = 0 * eye(2);  % No field in beginning
-    particles(k).force = [0; 0; 0];
-    particles(k).a = [0;0;0];
+ys_RK = zeros(size(t));
+ys_EF = zeros(size(t));
+ys_exact = exp(t);
+
+y = 1;  % y(0) = 1
+for n=1:length(t)
+    k1 = y;
+    k2 = y+dt/2*k1;
+    k3 = y+dt/2*k2;
+    k4 = y+dt*k3;
     
-    particles(k).size = 10;
-    particles(k).p = 0;  % Reference to plot object
+    y = y + dt/6*(k1+2*k2+2*k3+k4);
+    ys_RK(n) = y;
 end
 
-% Position of particles depends on type of field object
-switch TYPE
-    case "charge"
-        for k=1:field_obj.n_particles
-            cmap = hsv(field_obj.n_particles);
-            particles(k).x = rand(3,1);
-            particles(k).color = cmap(k,:);
-        end
-    case "eDipole"
-        particles(1).x = [0.5;0.5;0.8];
-        particles(1).color = "b";
-        particles(2).x = [0.5;0.5;0.2];
-        particles(2).color = "b";
-        particles(3).x = [0.8;0.5;0.5];
-        particles(3).color = "c";
-        particles(4).x = [0.5;0.8;0.5];
-        particles(4).color = "b";
-        particles(5).x = [0.5;0.2;0.5];
-        particles(5).color = "b";
-    case "current"
-        particles(1).x = [0.9;0.5;0.1];
-        particles(1).v = [0;0;0.01];
-        particles(1).color = "c";
+y = 1;  % y(0) = 1
+for n=1:length(t)
+    y = y + y*dt;
+    ys_EF(n) = y;
 end
 
 
-% Create figure and axes
-fig = figure(1);
-clf(fig);
-ax = gca;
-ax = initialize_axes(ax);
+plot(t,ys_RK,'LineWidth',2), hold on
+plot(t,ys_EF,'LineWidth',2)
+plot(t,ys_exact,'LineWidth',2), hold off
+title(['exp(t), dt=' num2str(dt)])
 
-% Plot particles and field object
-field_obj = plot_field_obj(ax,field_obj);
-particles = plot_particles(ax,particles);
+legend("Runge-Kutta","Euler forward", "Exact")
+
+%% Solve harmonic oscillator problem
+clearvars, clf
+dt = 0.1;
+T = 20;
+S0 = [1; 0];
+g = 10;
+k = 1;
+m = 1;
+
+t = 0:dt:T;
+
+S_RK = zeros(2,length(t));
+S_EF = zeros(2,length(t));
+[t_ode45,S_ode45] = ode45(@(t,S) [S(2); g-k/m*S(1)], [0 T], S0);
+
+S = S0;  % S = [x; v], S(0) = [1; 0]
+for n=1:length(t)
+    k1 = [S(2); g-k/m*S(1)];
+    k2 = [S(2)+dt/2*k1(2); g-k/m*(S(1)+dt/2*k1(1))];
+    k3 = [S(2)+dt/2*k2(2); g-k/m*(S(1)+dt/2*k2(1))];
+    k4 = [S(2)+dt*k3(2); g-k/m*(S(1)+dt*k3(1))];
+    
+    S = S + dt/6*(k1+2*k2+2*k3+k4);
+    S_RK(:,n) = S;
+end
+
+S = S0;  % S = [x; v], S(0) = [1; 0]
+for n=1:length(t)
+    S = S + dt*[S(2); g-k/m*S(1)];
+    S_EF(:,n) = S;
+end
+
+plot(t,S_RK(1,:),'LineWidth',2), hold on
+plot(t,S_EF(1,:),'LineWidth',2)
+plot(t_ode45,S_ode45(:,1),'LineWidth',2), hold off
+legend("Runge-Kutta","Euler forward","ode45")
+text = '$\textrm{Harmonic oscillator} \; x''''(t)=g-k/m x(t)$';
+title(text,'interpreter','latex','FontSize',18)
+
+%% Two dimensional gravitational problem
+clearvars, clf
+C = 1;  % C = G*m2;
+dt = 0.1;
+T = 20;
+S0 = [1; 0; 0; 1];
+
+t = 0:dt:T;
+
+S_RK = zeros(4,length(t));
+S_EF = zeros(4,length(t));
+[t_ode45,S_ode45] = ode45(@(t,S) [S(3); S(4); -C*S(1)/(S(1).^2+S(2).^2).^(3/2); -C*S(2)/(S(1).^2+S(2).^2).^(3/2)], [0 T], S0);
+
+S = S0;  % S = [x; v], S(0) = [1; 0]
+for n=1:length(t)
+    k1 = [S(3); S(4); -C*S(1)/(S(1).^2+S(2).^2).^(3/2); -C*S(2)/(S(1).^2+S(2).^2).^(3/2)];
+    k2 = [S(3)+dt/2*k1(3); S(4)+dt/2*k1(4); -C*(S(1)+dt/2*k1(1))/((S(1)+dt/2*k1(1)).^2+(S(2)+dt/2*k1(2)).^2).^(3/2); -C*(S(2)+dt/2*k1(2))/((S(1)+dt/2*k1(1)).^2+(S(2)+dt/2*k1(2)).^2).^(3/2)];
+    k3 = [S(3)+dt/2*k2(3); S(4)+dt/2*k2(4); -C*(S(1)+dt/2*k2(1))/((S(1)+dt/2*k2(1)).^2+(S(2)+dt/2*k2(2)).^2).^(3/2); -C*(S(2)+dt/2*k2(2))/((S(1)+dt/2*k2(1)).^2+(S(2)+dt/2*k2(2)).^2).^(3/2)];
+    k4 = [S(3)+dt*k3(3); S(4)+dt*k3(4); -C*(S(1)+dt*k3(1))/((S(1)+dt*k3(1)).^2+(S(2)+dt*k3(2)).^2).^(3/2); -C*(S(2)+dt*k3(2))/((S(1)+dt*k3(1)).^2+(S(2)+dt*k3(2)).^2).^(3/2)];
+    
+    S = S + dt/6*(k1+2*k2+2*k3+k4);
+    S_RK(:,n) = S;
+end
+
+S = S0;  % S = [x; v], S(0) = [1; 0]
+for n=1:length(t)
+    S = S + dt*[S(3); S(4); -C*S(1)/(S(1).^2+S(2).^2).^(3/2); -C*S(2)/(S(1).^2+S(2).^2).^(3/2)];
+    S_EF(:,n) = S;
+end
+
+plot(0,0,'k.','MarkerSize',30), hold on, axis equal
+plot(S_RK(1,:),S_RK(2,:),'LineWidth',2)
+plot(S_EF(1,:),S_EF(2,:),'LineWidth',2)
+plot(S_ode45(:,1),S_ode45(:,2),'LineWidth',2)
+legend("Center", "Runge-Kutta","Euler forward","ode45")
+text = '$\textrm{Gravitation in 2D}$';
+title(text,'interpreter','latex','FontSize',18)

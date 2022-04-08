@@ -1,5 +1,5 @@
 clf, clearvars, clc
-DT = 0.2;
+DT = 0.01;
 T = 120;
 % N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_MASS = 1e-3;  % 1 g
@@ -45,7 +45,7 @@ switch TYPE
         particles(5).x = [0.5;0.2;0.5];
         particles(5).color = "b";
     case "current"
-        particles(1).x = [0.9;0.5;0.1];
+        particles(1).x = [0.8;0.5;0.1];
         particles(1).v = [0;0;0.01];
         particles(1).color = "c";
 %         particles(2).x = [0.7;0.5;0.5];
