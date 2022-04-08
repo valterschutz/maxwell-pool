@@ -66,7 +66,7 @@ ax = initialize_axes(ax);
 
 % Plot stuff
 view(0,0)
-title(ax,"Innan")
+title(ax,"Efter")
 
 % Plot particles and field object
 field_obj = plot_field_obj(ax,field_obj);

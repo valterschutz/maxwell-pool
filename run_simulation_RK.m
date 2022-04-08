@@ -18,15 +18,15 @@ for t=0:dt:T
 
         F = F_from_field_obj(field_obj, x+dt/2*k1(1:3));
         force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v_multi-v_multi*(F-F'))));
-        k2 = [v; force/m];
+        k2 = [v+dt/2*k1(4:6); force/m];
 
         F = F_from_field_obj(field_obj, x+dt/2*k2(1:3));
         force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v_multi-v_multi*(F-F'))));
-        k3 = [v; force/m];
+        k3 = [v+dt/2*k2(4:6); force/m];
 
         F = F_from_field_obj(field_obj, x+dt*k3(1:3));
         force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v_multi-v_multi*(F-F'))));
-        k4 = [v; force/m];
+        k4 = [v+dt*k3(4:6); force/m];
 
         S = [x; v] + dt/6*(k1+2*k2+2*k3+k4);
         particles(j).x = S(1:3); particles(j).v = S(4:6);
