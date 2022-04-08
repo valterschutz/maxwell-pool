@@ -1,8 +1,9 @@
 clf, clearvars, clc
 DT = 0.01;
-T = 2;
+T = 5;
 N_particles = 1;  % Number of particles
 epsilon_0 = 8.8541878128e-12;
+save_frames = false;
 
 orbital_period = 0.2;
 mass = 1;
@@ -44,8 +45,10 @@ particles = plot_particles(ax,particles);
 
 
 % Run the simulation
-frames = run_simulation_RK(field_obj,particles,T,DT);
-writer = VideoWriter("videos/test_solar_RK_dt0punkt01.avi");
-open(writer);
-writeVideo(writer,frames);
-close(writer);
+frames = run_simulation_RK(field_obj,particles,T,DT,save_frames);
+if save_frames
+    writer = VideoWriter("videos/test_solar_RK_dt0punkt01.avi");
+    open(writer);
+    writeVideo(writer,frames);
+    close(writer);
+end

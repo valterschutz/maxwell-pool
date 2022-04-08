@@ -1,8 +1,9 @@
-function frames = run_simulation_RK(field_obj,particles,T,dt)
+function frames = run_simulation_RK(field_obj,particles,T,dt,save_frames)
 
 epsilon_0 = 8.8541878128e-12;
 mu_0 = 1.25663706212e-6;
 
+frames = zeros(length(0:dt:T));
 k = 1;
 for t=0:dt:T
     % Update field object
@@ -36,7 +37,7 @@ for t=0:dt:T
         k4 = [v; force/m];
 
         S = [x_init; v_init] + dt/6*(k1+2*k2+2*k3+k4);
-        particles(j).x = S(1:3); particles(j).v = S(4:6);
+        particles(j).x = S(1:3); particles(j).v = bounce_check(S(1:3),S(4:6));
     
 
 %         fprintf("|F| ~ %.2e, |force| ~ %.2e\n", norm(multivector_to_vector(F)), norm(particles(j).force));
@@ -46,7 +47,9 @@ for t=0:dt:T
     replot_field_obj(field_obj);
 
     drawnow
-    frames(k) = getframe; k = k + 1;
+    if save_frames
+        frames(k) = getframe; k = k + 1;
+    end
     fprintf("T=%.2f\n",t)
 %     view([k 25])
 %     set(ax,'nextplot','replacechildren');

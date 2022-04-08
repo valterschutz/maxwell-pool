@@ -1,8 +1,9 @@
-function frames = run_simulation(field_obj,particles,T,dt)
+function frames = run_simulation(field_obj,particles,T,dt,save_frames)
 
 epsilon_0 = 8.8541878128e-12;
 mu_0 = 1.25663706212e-6;
 
+frames = zeros(length(0:dt:T));
 k = 1;
 for t=0:dt:T
     % Update field object
@@ -15,7 +16,7 @@ for t=0:dt:T
 
         particles(j).force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v-v*(F-F'))));
         particles(j).a = particles(j).force/particles(j).m;
-        particles(j).v = particles(j).v + particles(j).a * dt;
+        particles(j).v = bounce_check(particles(j).x,particles(j).v + particles(j).a * dt);
 %         particles(j).v = bounce_check(particles(j).x, particles(j).v);
         particles(j).x = particles(j).x + particles(j).v * dt;
 
@@ -26,7 +27,9 @@ for t=0:dt:T
     replot_field_obj(field_obj)  % Update field object positioning
 
     drawnow
-    frames(k) = getframe; k = k + 1;
+    if save_frames
+        frames(k) = getframe; k = k + 1;
+    end
     fprintf("T=%.2f\n",t)
 end
 

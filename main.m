@@ -1,13 +1,10 @@
 clf, clearvars, clc
-DT = 1;
-T = 100;
-% N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
+DT = 0.02;
+T = 5;
+N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 10 nC
 TYPE = "current";  % Choose between "charge" and "eDipole", "current"
-PLOT_F = false;
-PLOT_E = false;
-PLOT_B = false;
 
 % Initialize field object
 field_obj = generate_field_obj(TYPE);
@@ -21,7 +18,7 @@ for k=1:field_obj.n_particles
     particles(k).force = [0; 0; 0];
     particles(k).a = [0;0;0];
     
-    particles(k).size = 10;
+    particles(k).size = 20;
     particles(k).p = 0;  % Reference to plot object
 end
 
@@ -46,7 +43,7 @@ switch TYPE
         particles(5).color = "b";
     case "current"
         particles(1).x = [0.8;0.5;0.1];
-        particles(1).v = [0;0;0.01];
+        particles(1).v = [0;0;0.2];
         particles(1).color = "c";
 %         particles(2).x = [0.7;0.5;0.5];
 %         particles(2).v = [-1;0;0];
@@ -66,7 +63,7 @@ ax = initialize_axes(ax);
 
 % Plot stuff
 view(0,0)
-title(ax,['Euler forward, dt=' num2str(DT)])
+% title(ax,['Euler forward, dt=' num2str(DT)])
 
 % Plot particles and field object
 field_obj = plot_field_obj(ax,field_obj);
@@ -78,4 +75,4 @@ field_obj = control_field_obj(ax,field_obj);
 
 
 % Run the simulation
-run_simulation(field_obj,particles,T,DT)
+run_simulation_RK(field_obj,particles,T,DT,false);
