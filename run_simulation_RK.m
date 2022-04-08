@@ -3,7 +3,7 @@ function frames = run_simulation_RK(field_obj,particles,T,dt,save_frames)
 epsilon_0 = 8.8541878128e-12;
 mu_0 = 1.25663706212e-6;
 
-frames = zeros(length(0:dt:T));
+% frames = zeros(size(getframe));
 k = 1;
 for t=0:dt:T
     % Update field object
@@ -46,7 +46,7 @@ for t=0:dt:T
     replot_particles(particles);
     replot_field_obj(field_obj);
 
-    drawnow
+    drawnow limitrate
     if save_frames
         frames(k) = getframe; k = k + 1;
     end

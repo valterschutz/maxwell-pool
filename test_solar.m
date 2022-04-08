@@ -1,11 +1,11 @@
 clf, clearvars, clc
-DT = 0.01;
+DT = 0.001;
 T = 5;
 N_particles = 1;  % Number of particles
 epsilon_0 = 8.8541878128e-12;
 save_frames = false;
 
-orbital_period = 0.2;
+orbital_period = 1;
 mass = 1;
 initial_distance = 0.2;
 
@@ -33,10 +33,9 @@ ax = gca;
 ax = initialize_axes(ax);
 
 % Plot stuff
-
 theta = linspace(0,2*pi);
 plot3(ax,0.5+initial_distance*cos(theta),0.5+initial_distance*sin(theta),0.5*ones(size(theta)),'r-')
-view([0 90]), grid on, axis([0 1 0 1 0 1])
+view([0 90]), grid on, axis([0 1 0 1 0 1]), axis equal
 title(['Runge-Kutta, dt=' num2str(DT)])
 
 % Plot particles and field object

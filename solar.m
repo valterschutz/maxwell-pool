@@ -1,11 +1,12 @@
 clf, clearvars, clc
-DT = 0.01;
-T = 10;
+DT = 0.004;
+T = 0.5;
 N_particles = 8;  % Number of particles
 particle_colors = ['r','g','b','c','m','r','g','c'];
 MAX_RADII = 0.45;
 SMALLEST_PERIOD = 0.1;
 epsilon_0 = 8.8541878128e-12;
+save_frames = true;
 
 % Planets not including Pluto
 % Orbital period in days
@@ -45,7 +46,7 @@ ax = gca;
 ax = initialize_axes(ax);
 
 % Plot stuff
-view([0 90])
+view([0 90]), axis([0.45 0.55 0.45 0.55 0 1]), set(gca,'DataAspectRatio',[1 1 1])
 
 % Plot particles and field object
 field_obj = plot_field_obj(ax,field_obj);
@@ -53,4 +54,10 @@ particles = plot_particles(ax,particles);
 
 
 % Run the simulation
-run_simulation_RK(field_obj,particles,T,DT)
+frames = run_simulation_RK(field_obj,particles,T,DT,save_frames);
+if save_frames
+    writer = VideoWriter("videos/solar.avi");
+    open(writer);
+    writeVideo(writer,frames);
+    close(writer);
+end
