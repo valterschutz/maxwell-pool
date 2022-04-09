@@ -1,20 +1,7 @@
-function frames = run_simulation_RK(field_obj,particles,T,dt,varargin)
+function frames = run_simulation_RK(ax,field_obj,particles,T,dt,trajectory)
 % If output is requested, save frames
 epsilon_0 = 8.8541878128e-12;
 mu_0 = 1.25663706212e-6;
-
-% No trajectory by default
-trajectory = false;
-
-% Process varargin
-names = varargin(1:2:end);
-values = varargin(2:2:end);
-for k=1:numel(names)
-    switch names{k}
-        case 'Trajectory'
-            trajectory = values{k};
-    end
-end
 
 k = 1;
 for t=0:dt:T
@@ -35,11 +22,11 @@ for t=0:dt:T
         S = S + dt/6*(k1+2*k2+2*k3+k4);
 
         particles(j).x = S(1:3);
-        particles(j).v = S(4:6);
+        particles(j).v = bounce_check(S(1:3),S(4:6));
     end
     
-    replot_particles(particles, trajectory);
-    replot_field_obj(field_obj);
+    replot_particles(ax,particles, trajectory);
+    replot_field_obj(ax,field_obj);
 
     drawnow limitrate
     if nargout>0

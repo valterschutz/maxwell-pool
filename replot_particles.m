@@ -1,4 +1,4 @@
-function replot_particles(particles,trajectory)
+function replot_particles(ax,particles,trajectory)
 %PLOT_PARTICLES replots particles in particles in axes ax.
 %   If trajectory is true, plot trajectory. Otherwise only plot current
 %   position
@@ -10,23 +10,26 @@ for j=1:length(particles)
     z = particles(j).x(3);
     
     if trajectory
-        hold on
+        hold(ax,'on')
         particles(j).p = plot3(x, y, z, 'Marker','.', 'Color', particles(j).color, 'MarkerSize', particles(j).size);
-        hold off
+        hold(ax,'off')
     else
         particles(j).p.XData = x;
         particles(j).p.YData = y;
         particles(j).p.ZData = z;
     end
-%     
-%     particles(j).px.YData = y;
-%     particles(j).px.ZData = z;
-% 
-%     particles(j).py.XData = x;
-%     particles(j).py.ZData = z;
-% 
-%     particles(j).pz.XData = x;
-%     particles(j).pz.YData = y;
+
+    % Update shadows if they exist
+    if isfield(particles(j), 'px')
+        particles(j).px.YData = y;
+        particles(j).px.ZData = z;
+    
+        particles(j).py.XData = x;
+        particles(j).py.ZData = z;
+    
+        particles(j).pz.XData = x;
+        particles(j).pz.YData = y;
+    end
 end
 end
 

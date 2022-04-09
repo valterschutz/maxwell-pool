@@ -1,4 +1,4 @@
-function replot_field_obj(field_obj)
+function replot_field_obj(ax,field_obj)
 %REPLOT_FIELD_OBJ Summary of this function goes here
 %   Detailed explanation goes here
 switch field_obj.type

@@ -5,7 +5,7 @@ switch type
     case "charge"
         field_obj.type = type;
         field_obj.m = 1;  % 1 kg
-        field_obj.q = 1e-3;  % 1 mC
+        field_obj.q = 1e-5;  % 10 mikroC
         field_obj.x = [0.5; 0.5; 0.5];
         field_obj.v = [0; 0; 0];
         field_obj.color = 'k';
