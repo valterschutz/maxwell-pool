@@ -1,9 +1,9 @@
 clf, clearvars, clc
 DT = 0.01;
-T = 1;
+T = 5;
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 10 nC
-TYPE = "charge";  % Choose between "charge" and "eDipole", "current"
+TYPE = "eDipole";  % Choose between "charge" and "eDipole", "current"
 PLOT_SHADOWS = false;
 PLOT_TRAJECTORY = false;
 
@@ -65,7 +65,7 @@ for k=1:length(particles)
     particles(k).force = [0; 0; 0];
     particles(k).a = [0;0;0];
     
-    particles(k).size = 30;
+    particles(k).size = 40;
     particles(k).p = 0;  % Reference to plot object
 end
 
