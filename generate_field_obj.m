@@ -30,7 +30,7 @@ switch type
         field_obj.type = type;
         field_obj.x = [0.5; 0.5; 0];  % Where the conductor crosses the xy-plane
 %         field_obj.current = 1e14;  % Strong current
-        field_obj.current = 1e14;
+        field_obj.current = 1e13;
         field_obj.color = "k";
         field_obj.size = 5;
         field_obj.p = 0;

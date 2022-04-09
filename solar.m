@@ -6,7 +6,7 @@ particle_colors = ['r','g','b','c','m','r','g','c'];
 MAX_RADII = 0.45;
 SMALLEST_PERIOD = 0.1;
 epsilon_0 = 8.8541878128e-12;
-save_frames = true;
+save_frames = false;
 
 % Planets not including Pluto
 % Orbital period in days

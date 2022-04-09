@@ -1,6 +1,6 @@
 clf, clearvars, clc
-DT = 0.02;
-T = 5;
+DT = 0.01;
+T = 30;
 N_particles = 6;  % Number of particles (does not include "cue ball"). Up to 6.
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 10 nC
@@ -43,7 +43,7 @@ switch TYPE
         particles(5).color = "b";
     case "current"
         particles(1).x = [0.8;0.5;0.1];
-        particles(1).v = [0;0;0.2];
+        particles(1).v = [0;0;0.1];
         particles(1).color = "c";
 %         particles(2).x = [0.7;0.5;0.5];
 %         particles(2).v = [-1;0;0];
@@ -75,4 +75,4 @@ field_obj = control_field_obj(ax,field_obj);
 
 
 % Run the simulation
-run_simulation_RK(field_obj,particles,T,DT,false);
+run_simulation_RK(field_obj,particles,T,DT,'Trajectory',true);

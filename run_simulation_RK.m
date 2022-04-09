@@ -1,9 +1,21 @@
-function frames = run_simulation_RK(field_obj,particles,T,dt,save_frames)
-
+function frames = run_simulation_RK(field_obj,particles,T,dt,varargin)
+% If output is requested, save frames
 epsilon_0 = 8.8541878128e-12;
 mu_0 = 1.25663706212e-6;
 
-% frames = zeros(size(getframe));
+% No trajectory by default
+trajectory = false;
+
+% Process varargin
+names = varargin(1:2:end);
+values = varargin(2:2:end);
+for k=1:numel(names)
+    switch names{k}
+        case 'Trajectory'
+            trajectory = values{k};
+    end
+end
+
 k = 1;
 for t=0:dt:T
     % Update field object
@@ -13,41 +25,24 @@ for t=0:dt:T
     for j=1:length(particles)
         q = particles(j).q;
         m = particles(j).m;
-        x_init = particles(j).x;
-        v_init = particles(j).v;
-        v_init_multi = vector_to_multivector(v_init);
 
-        F_init = F_from_field_obj(field_obj, x_init);
-        force_init = multivector_to_vector(q/2*((F_init+F_init')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F_init-F_init')*v_init_multi-v_init_multi*(F_init-F_init'))));
-        k1 = [v_init; force_init/m];
+        % Runge-Kutta method 
+        S = [particles(j).x; particles(j).v];
+        k1 = D(S);
+        k2 = D(S + dt/2*k1);
+        k3 = D(S+dt/2*k2);
+        k4 = D(S+dt*k3);
+        S = S + dt/6*(k1+2*k2+2*k3+k4);
 
-        F = F_from_field_obj(field_obj, x_init+dt/2*k1(1:3));
-        v = v_init + dt/2*k1(4:6); v_multi = vector_to_multivector(v);
-        force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v_multi-v_multi*(F-F'))));
-        k2 = [v; force/m];
-
-        F = F_from_field_obj(field_obj, x_init+dt/2*k2(1:3));
-        v = v_init + dt/2*k2(4:6); v_multi = vector_to_multivector(v);
-        force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v_multi-v_multi*(F-F'))));
-        k3 = [v; force/m];
-
-        F = F_from_field_obj(field_obj, x_init+dt*k3(1:3));
-        v = v_init + dt*k3(4:6); v_multi = vector_to_multivector(v);
-        force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v_multi-v_multi*(F-F'))));
-        k4 = [v; force/m];
-
-        S = [x_init; v_init] + dt/6*(k1+2*k2+2*k3+k4);
-        particles(j).x = S(1:3); particles(j).v = bounce_check(S(1:3),S(4:6));
-    
-
-%         fprintf("|F| ~ %.2e, |force| ~ %.2e\n", norm(multivector_to_vector(F)), norm(particles(j).force));
+        particles(j).x = S(1:3);
+        particles(j).v = S(4:6);
     end
     
-    replot_particles(particles);
+    replot_particles(particles, trajectory);
     replot_field_obj(field_obj);
 
     drawnow limitrate
-    if save_frames
+    if nargout>0
         frames(k) = getframe; k = k + 1;
     end
     fprintf("T=%.2f\n",t)
@@ -58,10 +53,21 @@ for t=0:dt:T
 %     frame = getframe(gcf);
 %     writeVideo(myWriter,frame);
 end
-
 % close(myWriter);
 
+function res = D(S)
+    % D = dS/dt where S = [x,y,z,vx,vy,vz]
+    x = S(1:3);
+    v = S(4:6);
+    v_multi = vector_to_multivector(v);
 
+    F = F_from_field_obj(field_obj, x);
+    force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v_multi-v_multi*(F-F'))));
+
+    res = [S(4:6); force/m];
+end
 
 end
+
+
 
