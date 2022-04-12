@@ -9,7 +9,8 @@ switch field_obj.type
         field_obj.v = bounce_check(field_obj.x, field_obj.v);
         field_obj.x = field_obj.x + field_obj.v*dt;
     case "current"
-        field_obj = field_obj;
+        field_obj.v = bounce_check(field_obj.x, field_obj.v);
+        field_obj.x = field_obj.x + field_obj.v*dt;
 end
 end
 

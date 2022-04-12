@@ -36,6 +36,12 @@ switch field_obj.type
 %         
 %         field_obj.pz.XData = x;
 %         field_obj.pz.YData = y;
+    case "current"
+        x = field_obj.x(1);
+        y = field_obj.x(2);
+
+        field_obj.p.XData = [x,x];
+        field_obj.p.YData = [y,y];
 end
 end
 

@@ -1,10 +1,10 @@
 clf, clearvars, clc
 DT = 0.01;
-T = 5;
+T = 200;
 PARTICLE_MASS = 1e-3;  % 1 g
-PARTICLE_CHARGE = 1e-10;  % 10 nC
-TYPE = "eDipole";  % Choose between "charge" and "eDipole", "current"
-PLOT_SHADOWS = false;
+PARTICLE_CHARGE = 1e-10;  % 0.1 nC
+TYPE = "current";  % Choose between "charge" and "eDipole", "current"
+PLOT_SHADOWS = true;
 PLOT_TRAJECTORY = false;
 
 % Initialize field object
@@ -44,8 +44,8 @@ switch TYPE
         particles(5).color = "b";
         particles(5).v = [0;0;0];
     case "current"
-        particles(1).x = [0.8;0.5;0.1];
-        particles(1).v = [0;0;0.1];
+        particles(1).x = [0.2;0.5;0.5];
+        particles(1).v = [0.01;0;0];
         particles(1).color = "c";
 %         particles(2).x = [0.7;0.5;0.5];
 %         particles(2).v = [-1;0;0];
@@ -65,7 +65,7 @@ for k=1:length(particles)
     particles(k).force = [0; 0; 0];
     particles(k).a = [0;0;0];
     
-    particles(k).size = 40;
+    particles(k).size = 20;
     particles(k).p = 0;  % Reference to plot object
 end
 

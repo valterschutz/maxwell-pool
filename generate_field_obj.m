@@ -28,9 +28,12 @@ switch type
         field_obj.n_particles = 5;
     case "current"
         field_obj.type = type;
-        field_obj.x = [0.5; 0.5; 0];  % Where the conductor crosses the xy-plane
+        field_obj.x = [0; 0.5; 0];  % Where the conductor crosses the xy-plane
 %         field_obj.current = 1e14;  % Strong current
-        field_obj.current = 1e13;
+        field_obj.v = [0;0;0];
+        field_obj.max_speed = 1;
+        field_obj.starting_aim = [1;0;0];
+        field_obj.current = 4e12;
         field_obj.color = "k";
         field_obj.size = 5;
         field_obj.p = 0;
