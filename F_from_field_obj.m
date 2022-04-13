@@ -30,7 +30,7 @@ switch field_obj.type
         F = sqrt(mu_0)*I/(2*pi)*outer_product(e3,xp-y)/(xp-y)^2;
 
         % If the current moves we get another contributing term
-        R = vector_to_multivector(field_obj.x - x);
+        R = y - xp;
         v_current = vector_to_multivector(field_obj.v);
         F = F + sqrt(epsilon_0)*(mu_0*I)/(4*pi) * (v_current * R + R * v_current)/R^2 * e3;
 end
