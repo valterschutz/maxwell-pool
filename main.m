@@ -3,7 +3,7 @@ DT = 0.01;
 T = 200;
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-10;  % 0.1 nC
-TYPE = "current";  % Choose between "charge" and "eDipole", "current"
+TYPE = "mDipole";  % Choose between "charge", "eDipole", "current" and "mDipole"
 PLOT_SHADOWS = true;
 PLOT_TRAJECTORY = false;
 
@@ -13,12 +13,7 @@ field_obj = generate_field_obj(TYPE);
 % Position, velocity and color of particles depends on field object
 switch TYPE
     case "charge"
-%         for k=1:5
-%             cmap = hsv(field_obj.n_particles);
-%             particles(k).x = rand(3,1);
-%             particles(k).v = [0;0;0];
-%             particles(k).color = cmap(k,:);
-%         end
+        % Place particles randomly on sphere surface
         radius = 0.2;
         for k=1:100
             theta = pi*rand; phi = 2*pi*rand;
@@ -54,6 +49,10 @@ switch TYPE
 %         particles(3).v = [-1;0;0];
 %         particles(3).q = -particles(3).q;
 %         particles(3).color = "b";
+    case "mDipole"
+        particles(1).x = [0.7;0.2;0.5];
+        particles(1).v = [0;0.1;0];
+        particles(1).color = "c";
 end
 
 % All other properties have default values

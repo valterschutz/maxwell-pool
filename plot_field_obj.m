@@ -22,6 +22,12 @@ switch field_obj.type
         x = field_obj.x(1);
         y = field_obj.x(2);
         field_obj.p = plot3(ax,[x,x],[y,y],[0,1],'-','Color',field_obj.color,'LineWidth',field_obj.size);
+    case "mDipole"
+        x = field_obj.x(1);
+        y = field_obj.x(2);
+        z = field_obj.x(3);
+        
+        field_obj.p = quiver3(ax,x-0.05,y,z,0.1,0,0, field_obj.size, 'Color', field_obj.color, 'LineWidth', 2*field_obj.size, 'MaxHeadSize', 1);
 end
 hold(ax,'off')
 end

@@ -33,6 +33,19 @@ switch field_obj.type
         R = y - xp;
         v_current = vector_to_multivector(field_obj.v);
         F = F + sqrt(epsilon_0)*(mu_0*I)/(4*pi) * (v_current * R + R * v_current)/R^2 * e3;
+    case "mDipole"
+        % Define inner product for vector v and trivector w
+        inner_product = @(v,w) 1/2*(v*w + w*v);
+
+        % Define outer product for vector v and bivector w
+        outer_product = @(v,w) 1/2*(v*w - w*v);
+
+        r = x - field_obj.x;
+        R = vector_to_multivector(r);
+        D = vector_to_multivector(field_obj.d);
+
+        B = mu_0/(4*pi) * (3*inner_product(R, outer_product(R,D))/norm(r)^5 - D/norm(r)^3);
+        F = B/sqrt(mu_0);
 end
 end
 

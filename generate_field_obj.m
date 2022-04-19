@@ -22,14 +22,10 @@ switch type
         field_obj.v = [0; 0; 0];
         field_obj.color = 'k';
         field_obj.size = 1;
-        field_obj.max_speed = 1;  % This corresponds to user entering 100% speed when aiming
-        field_obj.starting_aim = [1;0;0];
         field_obj.p = 0;  % Reference to plot object
-        field_obj.n_particles = 5;
     case "current"
         field_obj.type = type;
         field_obj.x = [0; 0.5; 0];  % Where the conductor crosses the xy-plane
-%         field_obj.current = 1e14;  % Strong current
         field_obj.v = [0;0;0];
         field_obj.max_speed = 1;
         field_obj.starting_aim = [1;0;0];
@@ -37,7 +33,16 @@ switch type
         field_obj.color = "k";
         field_obj.size = 5;
         field_obj.p = 0;
-        field_obj.n_particles = 1;
+    case "mDipole"
+        field_obj.type = type;
+        field_obj.m = 1;  % 1 kg
+        e1 = [0 1; 1 0];
+        field_obj.d = 100 * e1;
+        field_obj.x = [0.5; 0.5; 0.5];
+        field_obj.v = [0; 0; 0];
+        field_obj.color = 'yellow';
+        field_obj.size = 1;
+        field_obj.p = 0;  % Reference to plot object
 end
 end
 
