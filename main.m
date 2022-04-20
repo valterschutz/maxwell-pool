@@ -50,8 +50,8 @@ switch TYPE
 %         particles(3).q = -particles(3).q;
 %         particles(3).color = "b";
     case "mDipole"
-        particles(1).x = [0.7;0.2;0.5];
-        particles(1).v = [0;0.1;0];
+        particles(1).x = [0.1;0.5;0.5];
+        particles(1).v = [0.001;0;0];
         particles(1).color = "c";
 end
 
