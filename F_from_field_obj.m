@@ -38,11 +38,12 @@ switch field_obj.type
         inner_product = @(v,w) 1/2*(v*w + w*v);
 
         % Define outer product for vector v and bivector w
-        outer_product = @(v,w) 1/2*(v*w - w*v);
+        outer_product = @(v,w) 1/2*(v*w + w*v);
 
         r = x - field_obj.x;
         R = vector_to_multivector(r);
-        D = vector_to_multivector(field_obj.d);
+%         D = vector_to_multivector(field_obj.d);
+        D = field_obj.d;
 
         B = mu_0/(4*pi) * (3*inner_product(R, outer_product(R,D))/norm(r)^5 - D/norm(r)^3);
         F = B/sqrt(mu_0);

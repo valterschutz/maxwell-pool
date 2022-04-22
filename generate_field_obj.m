@@ -5,7 +5,7 @@ switch type
     case "charge"
         field_obj.type = type;
 %         field_obj.m = 1;  % 1 kg
-        field_obj.q = 1e-5;  % 10 mikroC
+        field_obj.q = 1e-8;  % 10 mikroC
         field_obj.x = [0.5; 0.5; 0.5];
         field_obj.v = [0; 0; 0];
         field_obj.color = 'k';
@@ -17,7 +17,7 @@ switch type
     case "eDipole"
         field_obj.type = type;
 %         field_obj.m = 1;  % 1 kg
-        field_obj.d = 0.1e-3 * [1; 0; 0];  % 0.1 mC
+        field_obj.d = 1e-7 * [1; 0; 0];  % 1 mC m
         field_obj.x = [0.5; 0.5; 0.5];
         field_obj.v = [0; 0; 0];
         field_obj.color = 'k';
@@ -36,8 +36,9 @@ switch type
     case "mDipole"
         field_obj.type = type;
 %         field_obj.m = 1;  % 1 kg
+        e2 = [0 -i; i 0];
         e3 = [1 0; 0 -1];
-        field_obj.d =  1e-9 * 1e-7 * 1e-3/(9.109e-31) * 1.602e-19/(1e-10) * e3;
+        field_obj.d =  0.5e11 * e2 * e3;
         field_obj.x = [0.5; 0.5; 0.5];
         field_obj.v = [0; 0; 0];
         field_obj.color = 'yellow';

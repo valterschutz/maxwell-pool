@@ -1,10 +1,11 @@
 clf, clearvars, clc
-DT = 0.01;
-T = 200;
+DT = 0.1;
+% DT = 0.1;
+T = 1000;
 PARTICLE_MASS = 1e-3;  % 1 g
-PARTICLE_CHARGE = 1e-10;  % 0.1 nC
-TYPE = "mDipole";  % Choose between "charge", "eDipole", "current" and "mDipole"
-PLOT_SHADOWS = true;
+PARTICLE_CHARGE = 1e-9;  % 1 nC
+TYPE = "charge";  % Choose between "charge", "eDipole", "current" and "mDipole"
+PLOT_SHADOWS = false;
 PLOT_TRAJECTORY = false;
 
 % Initialize field object
@@ -15,7 +16,7 @@ switch TYPE
     case "charge"
         % Place particles randomly on sphere surface
         radius = 0.2;
-        for k=1:100
+        for k=1:10
             theta = pi*rand; phi = 2*pi*rand;
             particles(k).x = field_obj.x + [radius*sin(theta)*cos(phi); radius*sin(theta)*sin(phi); radius*cos(theta)];
             particles(k).v = [0; 0; 0];
@@ -50,8 +51,8 @@ switch TYPE
 %         particles(3).q = -particles(3).q;
 %         particles(3).color = "b";
     case "mDipole"
-        particles(1).x = [0.1;0.5;0.5];
-        particles(1).v = [0.001;0;0];
+        particles(1).x = [0.5;0.5;0.25];
+        particles(1).v = [0;0;0.01];
         particles(1).color = "c";
 end
 
