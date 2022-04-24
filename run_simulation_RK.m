@@ -1,5 +1,7 @@
 function frames = run_simulation_RK(ax,field_obj,particles,T,dt,trajectory)
-% If output is requested, save frames
+%RUN_SIMULATION_RK Simulate interactions between field object and
+%particles using a Runge-Kutta method for numerical computation.
+%   If output is requested, save frames
 epsilon_0 = 8.8541878128e-12;
 mu_0 = 1.25663706212e-6;
 
@@ -26,7 +28,7 @@ for t=0:dt:T
     end
     
     replot_particles(ax,particles, trajectory);
-    replot_field_obj(ax,field_obj);
+    replot_field_obj(field_obj);
 
     drawnow limitrate
     if nargout>0

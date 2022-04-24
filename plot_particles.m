@@ -1,5 +1,5 @@
 function particles = plot_particles(ax,particles,shadows)
-%PLOT_PARTICLES plots particles in axes ax
+%PLOT_PARTICLES Plots particles in axes ax
 %   If shadows is true, plot shadows on the side of the box.
 hold(ax,'on');
 for j=1:length(particles)

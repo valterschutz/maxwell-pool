@@ -1,6 +1,5 @@
 function multivector = vector_to_multivector(vector)
-%VECTOR_TO_MULTIVECTOR Summary of this function goes here
-%   Detailed explanation goes here
+%VECTOR_TO_MULTIVECTOR Converts a vector in normal form to matrix form.
 
 sigma_1 = [0 1; 1 0];
 sigma_2 = [0 -i; i 0];

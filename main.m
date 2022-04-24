@@ -1,18 +1,30 @@
 clf, clearvars, clc
-DT = 0.1;
-% DT = 0.1;
-T = 20;
+DT = 0.1;  % Time step
+T = 1000;  % Total time for simulation
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
-TYPE = "charge";  % Choose between "charge", "eDipole", "current" and "mDipole"
-PLOT_SHADOWS = false;
-PLOT_TRAJECTORY = false;
+
+% Choose between "charge", "eDipole", "current" and "mDipole"
+TYPE = "current";
+
+% Toggle this to see shadows for all particles on the sides of the box and
+% shadows for field object.
+PLOT_SHADOWS = false; 
+
+% Plot trajectory of particles
+PLOT_TRAJECTORY = true;
+
+% Save each frame in simulation and finally create a movie. Affects
+% performance drastically
 SAVE_MOVIE = false;
 
-% Initialize field object
+% Initialize field object. This will either be a point like electric
+% charge, electric dipole, magnetic dipole or current carrying wire
 field_obj = generate_field_obj(TYPE);
 
 % Position, velocity and color of particles depends on field object
+% The position and velocity is choosen to exemplify each field object's
+% characteristic behaviour
 switch TYPE
     case "charge"
         % Place particles randomly on sphere surface
@@ -41,27 +53,41 @@ switch TYPE
         particles(5).color = "b";
         particles(5).velocity = [0;0;0];
     case "current"
-        particles(1).position = [0.2;0.5;0.5];
-        particles(1).velocity = [0.01;0;0];
-        particles(1).color = "c";
-%         particles(2).position = [0.7;0.5;0.5];
-%         particles(2).velocity = [-1;0;0];
-%         particles(2).color = "r";
-%         particles(3).position = [0.7;0.5;0.5];
-%         particles(3).velocity = [-1;0;0];
-%         particles(3).color = "b";
+        % Uncomment this if wire is moving with v=0.01 m/s in x.
+%         particles(1).position = [0.2;0.5;0.5];
+%         particles(1).velocity = [0.01;0;0];
+%         particles(1).color = "c";
+
+        % Uncomment this if wire is static
+        particles(1).position = [0.5;0.5;0.5];
+        particles(1).velocity = [0;0;0.1];
+        particles(1).color = "r";
+        particles(2).position = [0.5;0.5;0.5];
+        particles(2).velocity = [0;0;0.1];
+        particles(2).color = "b";
+        particles(2).isnegative = true;
+        particles(3).position = [0.5;0.5;0.5];
+        particles(3).velocity = [0;0;0];
+        particles(3).color = "c";
     case "mDipole"
         particles(1).position = [0.5;0.5;0.25];
         particles(1).velocity = [0;0;0.01];
         particles(1).color = "c";
 end
 
-% All other properties have default values
+% All other properties have default values and are the same regardless of
+% field object type
 for k=1:length(particles)
     particles(k).mass = PARTICLE_MASS;
-    particles(k).charge = PARTICLE_CHARGE;
+
+    % In some cases we want negative charge
+    if particles(k).isnegative
+        particles(k).charge = -PARTICLE_CHARGE;
+    else
+        particles(k).charge = PARTICLE_CHARGE;
+    end
     
-    particles(k).field = 0 * eye(2);  % No field in beginning
+    particles(k).field = 0 * eye(2);  % No field before simulation starts
     particles(k).force = [0; 0; 0];
     particles(k).acceleration = [0;0;0];
     
@@ -76,17 +102,18 @@ ax = gca;
 ax = initialize_axes(ax);
 
 % Plot stuff
-% view(0,0)
+view(0,0)
 % title(ax,['Euler forward, dt=' num2str(DT)])
 
 % Plot particles and field object
-field_obj = plot_field_obj(ax,field_obj);
+field_obj = plot_field_obj(ax,field_obj,PLOT_SHADOWS);
 particles = plot_particles(ax,particles,PLOT_SHADOWS);
 
-% Allow user to control field object
+% Allow user to control field object if field_obj.type is
+% "charge" or "current"
 field_obj = control_field_obj(ax,field_obj);
 
-% Run the simulation
+% Run the simulation, save frames if SAVE_MOVIE flag is enabled
 if SAVE_MOVIE
     frames = run_simulation_RK(ax,field_obj,particles,T,DT,PLOT_TRAJECTORY);
     v = VideoWriter("videos/movie");

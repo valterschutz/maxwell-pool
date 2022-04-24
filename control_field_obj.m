@@ -1,6 +1,7 @@
 function field_obj = control_field_obj(ax,field_obj)
-%CONTROL_FELD_OBJ Summary of this function goes here
-%   Detailed explanation goes here
+%CONTROL_FIELD_OBJ Allow user to control field object if the type is either
+%"charge" or "current". For "charge", aiming is in 3D. For "current",
+%aiming is in 2D.
 
 switch field_obj.type
     case "charge"
