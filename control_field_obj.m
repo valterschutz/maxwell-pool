@@ -12,7 +12,7 @@ switch field_obj.type
         Z_rot_inv = [cos(-theta) -sin(-theta) 0; sin(-theta) cos(-theta) 0; 0 0 1];
 
         % Plot arrow representing aim
-        pos = field_obj.x;
+        pos = field_obj.position;
         hold(ax,'on')
         % Create a quiver object, updated later
         q = quiver3(ax,pos(1),pos(2),pos(3),aim(1),aim(2),aim(3),0.2,'k','LineWidth',2);
@@ -42,7 +42,7 @@ switch field_obj.type
         end
         disp("Aim set!")
         strength = input("Hit strength (value between 0-100): "); 
-        field_obj.v = strength/100*field_obj.max_speed*aim;
+        field_obj.velocity = strength/100*field_obj.max_speed*aim;
         delete(q);
     case "current"
         % Allow user to aim, start with aim [1;0;0]
@@ -52,7 +52,7 @@ switch field_obj.type
         Z_rot_inv = [cos(-theta) -sin(-theta) 0; sin(-theta) cos(-theta) 0; 0 0 1];
 
         % Plot arrow representing aim
-        pos = field_obj.x;
+        pos = field_obj.position;
         hold(ax,'on')
         % Create a quiver object, updated later
         q = quiver3(ax,pos(1),pos(2),pos(3),aim(1),aim(2),aim(3),0.2,'k','LineWidth',2);
@@ -76,7 +76,7 @@ switch field_obj.type
         end
         disp("Aim set!")
         strength = input("Hit strength (value between 0-100): "); 
-        field_obj.v = strength/100*field_obj.max_speed*aim;
+        field_obj.velocity = strength/100*field_obj.max_speed*aim;
         delete(q);
 end
 end

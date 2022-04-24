@@ -5,30 +5,30 @@ function replot_particles(ax,particles,trajectory)
 
 % Update particle positions and shadows
 for j=1:length(particles)
-    x = particles(j).x(1);
-    y = particles(j).x(2);
-    z = particles(j).x(3);
+    x = particles(j).position(1);
+    y = particles(j).position(2);
+    z = particles(j).position(3);
     
     if trajectory
         hold(ax,'on')
-        particles(j).p = plot3(x, y, z, 'Marker','.', 'Color', particles(j).color, 'MarkerSize', particles(j).size);
+        particles(j).plotobj = plot3(x, y, z, 'Marker','.', 'Color', particles(j).color, 'MarkerSize', particles(j).size);
         hold(ax,'off')
     else
-        particles(j).p.XData = x;
-        particles(j).p.YData = y;
-        particles(j).p.ZData = z;
+        particles(j).plotobj.XData = x;
+        particles(j).plotobj.YData = y;
+        particles(j).plotobj.ZData = z;
     end
 
     % Update shadows if they exist
-    if isfield(particles(j), 'px')
-        particles(j).px.YData = y;
-        particles(j).px.ZData = z;
+    if isfield(particles(j), 'xshadow_plotobj')
+        particles(j).xshadow_plotobj.YData = y;
+        particles(j).xshadow_plotobj.ZData = z;
     
-        particles(j).py.XData = x;
-        particles(j).py.ZData = z;
+        particles(j).yshadow_plotobj.XData = x;
+        particles(j).yshadow_plotobj.ZData = z;
     
-        particles(j).pz.XData = x;
-        particles(j).pz.YData = y;
+        particles(j).zshadow_plotobj.XData = x;
+        particles(j).zshadow_plotobj.YData = y;
     end
 end
 end
