@@ -115,11 +115,11 @@ field_obj = control_field_obj(ax,field_obj);
 
 % Run the simulation, save frames if SAVE_MOVIE flag is enabled
 if SAVE_MOVIE
-    frames = run_simulation_RK(ax,field_obj,particles,T,DT,PLOT_TRAJECTORY);
+    frames = run_simulation(ax,field_obj,particles,T,DT,PLOT_TRAJECTORY);
     v = VideoWriter("videos/movie");
     open(v);
     writeVideo(v,frames);
     close(v);
 else
-    run_simulation_RK(ax,field_obj,particles,T,DT,PLOT_TRAJECTORY);
+    run_simulation(ax,field_obj,particles,T,DT,PLOT_TRAJECTORY);
 end
