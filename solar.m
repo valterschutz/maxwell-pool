@@ -38,7 +38,6 @@ for k=1:length(planet_masses)
     vy = 2*pi*particle_distances(k)/particle_orbital_periods(k);
     particles(k).velocity = [0;vy;0];
     particles(k).charge = -particles(k).mass*16*pi^3*epsilon_0*particle_distances(k)^3/(field_obj.charge*particle_orbital_periods(k)^2);
-%     fprintf("k=%d, q_solar=%.5e\n",k,particles(k).q(1,1))
     particles(k).position = [0.5+particle_distances(k);0.5;0.5];
     particles(k).field = 0 * eye(2);  % No field in beginning
     particles(k).force = 0;
