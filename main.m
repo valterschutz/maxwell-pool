@@ -53,12 +53,12 @@ switch TYPE
         particles(5).color = "b";
         particles(5).velocity = [0;0;0];
     case "current"
-        % Uncomment this if wire is moving with v=0.01 m/s in x.
-%         particles(1).position = [0.2;0.5;0.5];
-%         particles(1).velocity = [0.01;0;0];
-%         particles(1).color = "c";
+        % Uncomment this to have wire move with v=0.01 m/s in x.
+        % particles(1).position = [0.2;0.5;0.5];
+        % particles(1).velocity = [0.01;0;0];
+        % particles(1).color = "c";
 
-        % Uncomment this if wire is static
+        % Uncomment this to make wire stand still
         particles(1).position = [0.5;0.5;0.5];
         particles(1).velocity = [0;0;0.1];
         particles(1).color = "r";
@@ -101,9 +101,8 @@ clf(fig);
 ax = gca;
 ax = initialize_axes(ax);
 
-% Plot stuff
+% Uncomment for overhead view
 % view(0,0)
-% title(ax,['Euler forward, dt=' num2str(DT)])
 
 % Plot particles and field object
 field_obj = plot_field_obj(ax,field_obj,PLOT_SHADOWS);
