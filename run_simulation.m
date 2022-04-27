@@ -1,9 +1,10 @@
-function frames = run_simulation(field_obj,particles,T,dt,save_frames)
-
+function frames = run_simulation(ax,field_obj,particles,T,dt,trajectory)
+%RUN_SIMULATION_RK Simulate interactions between field object and
+%particles using a Runge-Kutta method for numerical computation.
+%   If output is requested, save frames
 epsilon_0 = 8.8541878128e-12;
 mu_0 = 1.25663706212e-6;
 
-frames = zeros(size(getframe));
 k = 1;
 for t=0:dt:T
     % Update field object
@@ -11,31 +12,44 @@ for t=0:dt:T
         
     % Update particles
     for j=1:length(particles)
-        particles(j).F = F_from_field_obj(field_obj, particles(j).x);
-        F = particles(j).F; v = vector_to_multivector(particles(j).v); q = particles(j).q;
+        q = particles(j).charge;
+        m = particles(j).mass;
 
-        particles(j).force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v-v*(F-F'))));
-        particles(j).a = particles(j).force/particles(j).m;
-        particles(j).v = bounce_check(particles(j).x,particles(j).v + particles(j).a * dt);
-%         particles(j).v = bounce_check(particles(j).x, particles(j).v);
-        particles(j).x = particles(j).x + particles(j).v * dt;
+        % Runge-Kutta method 
+        S = [particles(j).position; particles(j).velocity];
+        k1 = D(S);
+        k2 = D(S + dt/2*k1);
+        k3 = D(S+dt/2*k2);
+        k4 = D(S+dt*k3);
+        S = S + dt/6*(k1+2*k2+2*k3+k4);
 
-%         fprintf("|F| ~ %.2e, |force| ~ %.2e\n", norm(multivector_to_vector(F)), norm(particles(j).force));
+        particles(j).position = S(1:3);
+        particles(j).velocity = bounce_check(S(1:3),S(4:6));
     end
     
-    replot_particles(particles)  % Update particle positions
-    replot_field_obj(field_obj)  % Update field object positioning
+    replot_particles(ax,particles, trajectory);
+    replot_field_obj(field_obj);
 
     drawnow limitrate
-    if save_frames
+    if nargout>0
         frames(k) = getframe; k = k + 1;
     end
     fprintf("T=%.2f\n",t)
 end
 
-% close(myWriter);
+function res = D(S)
+    % D = dS/dt where S = [x,y,z,vx,vy,vz]
+    pos = S(1:3);
+    v = S(4:6);
+    v_multi = vector_to_multivector(v);
 
+    F = F_from_field_obj(field_obj, pos);
+    force = multivector_to_vector(q/2*((F+F')/sqrt(epsilon_0)+sqrt(mu_0)/2*((F-F')*v_multi-v_multi*(F-F'))));
 
+    res = [S(4:6); force/m];
+end
 
 end
+
+
 

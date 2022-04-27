@@ -5,14 +5,14 @@ PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
 
 % Choose between "charge", "eDipole", "current" and "mDipole"
-TYPE = "current";
+TYPE = "charge";
 
 % Toggle this to see shadows for all particles on the sides of the box and
 % shadows for field object.
 PLOT_SHADOWS = false; 
 
 % Plot trajectory of particles
-PLOT_TRAJECTORY = true;
+PLOT_TRAJECTORY = false;
 
 % Save each frame in simulation and finally create a movie. Affects
 % performance drastically
@@ -81,7 +81,7 @@ for k=1:length(particles)
     particles(k).mass = PARTICLE_MASS;
 
     % In some cases we want negative charge
-    if particles(k).isnegative
+    if isfield(particles(k), 'isnegative') && particles(k).isnegative
         particles(k).charge = -PARTICLE_CHARGE;
     else
         particles(k).charge = PARTICLE_CHARGE;
@@ -102,7 +102,7 @@ ax = gca;
 ax = initialize_axes(ax);
 
 % Plot stuff
-view(0,0)
+% view(0,0)
 % title(ax,['Euler forward, dt=' num2str(DT)])
 
 % Plot particles and field object
