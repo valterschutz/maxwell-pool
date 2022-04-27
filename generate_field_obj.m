@@ -32,7 +32,7 @@ switch type
         field_obj.plotobj = 0;
     case "mDipole"
         field_obj.type = type;
-        e2 = [0 -i; i 0];
+        e2 = [0 -1i; 1i 0];
         e3 = [1 0; 0 -1];
         field_obj.dipolemoment =  0.5e11 * e2 * e3;  % A multivector! [Am^2]
         field_obj.position = [0.5; 0.5; 0.5];

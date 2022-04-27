@@ -1,6 +1,5 @@
 function ax = initialize_axes(ax)
-%INITIALIZE_AXES Summary of this function goes here
-%   Detailed explanation goes here
+%INITIALIZE_AXES Default properties for axes ax
 ax.XLim = [0 1]; ax.YLim = [0 1]; ax.ZLim = [0 1];
 ax.XGrid = 'on'; ax.YGrid = 'on'; ax.ZGrid = 'on';
 ax.XLabel.String = 'x'; ax.XLabel.FontSize = 12;
