@@ -16,7 +16,7 @@ PLOT_TRAJECTORY = true;
 
 % Save each frame in simulation and finally create a movie. Affects
 % performance drastically
-SAVE_MOVIE = true;
+SAVE_MOVIE = false;
 
 % Initialize field object. This will either be a point like electric
 % charge, electric dipole, magnetic dipole or current carrying wire
