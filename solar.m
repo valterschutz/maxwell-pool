@@ -2,6 +2,7 @@ clf, clearvars, clc
 DT = 0.1;
 T = 50;
 particle_colors = ['r','g','b','c','m','r','g','c'];
+PARTICLE_MASS = 1e-3;
 MAX_RADII = 0.45;
 SMALLEST_PERIOD = 5;
 epsilon_0 = 8.8541878128e-12;
@@ -11,7 +12,7 @@ epsilon_0 = 8.8541878128e-12;
 PLOT_SHADOWS = false; 
 
 % Plot trajectory of particles
-PLOT_TRAJECTORY = false;
+PLOT_TRAJECTORY = true;
 
 % Save each frame in simulation and finally create a movie. Affects
 % performance drastically
@@ -21,9 +22,6 @@ SAVE_MOVIE = false;
 % Orbital period in days
 planet_orbital_periods = [88,224.7,365.2,687.0,4331,10747,30589,59800,90560];
 particle_orbital_periods = SMALLEST_PERIOD*planet_orbital_periods/min(planet_orbital_periods);
-% Masses of planets, in 10^24 kg
-planet_masses = [0.330,4.87,5.97,0.642,1898,568,86.8,102];
-particle_masses = planet_masses / max(planet_masses);
 % Distances of planets in 10^6 km from the sun
 planet_distances = [57.9, 108.2, 149.6, 228.0, 778.5, 1432.0, 2867.0, 4515.0];
 % Normalization
@@ -33,8 +31,8 @@ particle_distances = MAX_RADII*planet_distances/max(planet_distances);
 field_obj = generate_field_obj("charge");
 
 % Initialize particles
-for k=1:length(planet_masses)
-    particles(k).mass = particle_masses(k);
+for k=1:length(particle_distances)
+    particles(k).mass = PARTICLE_MASS;
     vy = 2*pi*particle_distances(k)/particle_orbital_periods(k);
     particles(k).velocity = [0;vy;0];
     particles(k).charge = -particles(k).mass*16*pi^3*epsilon_0*particle_distances(k)^3/(field_obj.charge*particle_orbital_periods(k)^2);
