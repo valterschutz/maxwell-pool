@@ -18,7 +18,7 @@ switch type
         field_obj.position = [0.5; 0.5; 0.5];
         field_obj.velocity = [0; 0; 0];
         field_obj.color = 'k';
-        field_obj.size = 1;
+        field_obj.size = 2;
         field_obj.plotobj = 0;  % Reference to plot object
     case "current"
         field_obj.type = type;
@@ -38,7 +38,7 @@ switch type
         field_obj.position = [0.5; 0.5; 0.5];
         field_obj.velocity = [0; 0; 0];
         field_obj.color = 'yellow';
-        field_obj.size = 1;
+        field_obj.size = 2;
         field_obj.plotobj = 0;  % Reference to plot object
 end
 end

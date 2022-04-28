@@ -1,22 +1,22 @@
 clf, clearvars, clc
 DT = 0.1;  % Time step
-T = 1000;  % Total time for simulation
+T = 200;  % Total time for simulation, change between runs
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
 
 % Choose between "charge", "eDipole", "current" and "mDipole"
-TYPE = "charge";
+TYPE = "mDipole";
 
 % Toggle this to see shadows for all particles on the sides of the box and
 % shadows for field object.
 PLOT_SHADOWS = false; 
 
 % Plot trajectory of particles
-PLOT_TRAJECTORY = false;
+PLOT_TRAJECTORY = true;
 
 % Save each frame in simulation and finally create a movie. Affects
 % performance drastically
-SAVE_MOVIE = false;
+SAVE_MOVIE = true;
 
 % Initialize field object. This will either be a point like electric
 % charge, electric dipole, magnetic dipole or current carrying wire
@@ -81,8 +81,12 @@ for k=1:length(particles)
     particles(k).mass = PARTICLE_MASS;
 
     % In some cases we want negative charge
-    if isfield(particles(k), 'isnegative') && particles(k).isnegative
-        particles(k).charge = -PARTICLE_CHARGE;
+    if isfield(particles(k), 'isnegative')
+        if particles(k).isnegative
+            particles(k).charge = -PARTICLE_CHARGE;
+        else
+            particles(k).charge = PARTICLE_CHARGE;
+        end
     else
         particles(k).charge = PARTICLE_CHARGE;
     end
@@ -102,7 +106,7 @@ ax = gca;
 ax = initialize_axes(ax);
 
 % Uncomment for overhead view
-% view(0,0)
+view(-90,0)
 
 % Plot particles and field object
 field_obj = plot_field_obj(ax,field_obj,PLOT_SHADOWS);
@@ -115,7 +119,8 @@ field_obj = control_field_obj(ax,field_obj);
 % Run the simulation, save frames if SAVE_MOVIE flag is enabled
 if SAVE_MOVIE
     frames = run_simulation(ax,field_obj,particles,T,DT,PLOT_TRAJECTORY);
-    v = VideoWriter("videos/movie");
+    filename = sprintf("videos/%s",TYPE);
+    v = VideoWriter(filename);
     open(v);
     writeVideo(v,frames);
     close(v);
