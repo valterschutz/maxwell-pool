@@ -4,7 +4,7 @@ function field_obj = generate_field_obj(type)
 switch type
     case "charge"
         field_obj.type = type;
-        field_obj.charge = 1e-8;  % 10 mikroC
+        field_obj.charge = 1e-8;  % 10 nanoC
         field_obj.position = [0.5; 0.5; 0.5];
         field_obj.velocity = [0; 0; 0];
         field_obj.color = 'k';
@@ -34,7 +34,7 @@ switch type
         field_obj.type = type;
         e2 = [0 -1i; 1i 0];
         e3 = [1 0; 0 -1];
-        field_obj.dipolemoment =  0.5e11 * e2 * e3;  % A multivector! [Am^2]
+        field_obj.dipolemoment =  5e10 * e2 * e3;  % A multivector! [Am^2]
         field_obj.position = [0.5; 0.5; 0.5];
         field_obj.velocity = [0; 0; 0];
         field_obj.color = 'yellow';
