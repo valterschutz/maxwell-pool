@@ -12,7 +12,7 @@ epsilon_0 = 8.8541878128e-12;
 PLOT_SHADOWS = false; 
 
 % Plot trajectory of particles
-PLOT_TRAJECTORY = false;
+PLOT_TRAJECTORY = true;
 
 % Save each frame in simulation and finally create a movie. Affects
 % performance drastically

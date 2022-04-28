@@ -1,11 +1,11 @@
 clf, clearvars, clc
 DT = 0.1;  % Time step
-T = 200;  % Total time for simulation, change between runs
+T = 30;  % Total time for simulation, change between runs
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
 
 % Choose between "charge", "eDipole", "current" and "mDipole"
-TYPE = "mDipole";
+TYPE = "charge";
 
 % Toggle this to see shadows for all particles on the sides of the box and
 % shadows for field object.
