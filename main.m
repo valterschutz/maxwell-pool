@@ -1,11 +1,11 @@
 clf, clearvars, clc
 DT = 0.1;  % Time step
-T = 30;  % Total time for simulation, change between runs
+T = 300;  % Total time for simulation, change between runs
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
 
 % Choose between "charge", "eDipole", "current" and "mDipole"
-TYPE = "charge";
+TYPE = "mDipole";
 
 % Toggle this to see shadows for all particles on the sides of the box and
 % shadows for field object.
@@ -105,8 +105,11 @@ clf(fig);
 ax = gca;
 ax = initialize_axes(ax);
 
-% Uncomment for overhead view
-view(-90,0)
+% Uncomment for xz-plane view
+% view(0,0)
+
+% Uncomment for yz-plane view
+% view(90,0)
 
 % Plot particles and field object
 field_obj = plot_field_obj(ax,field_obj,PLOT_SHADOWS);
