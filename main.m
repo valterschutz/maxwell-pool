@@ -33,18 +33,10 @@ switch TYPE
 %         particles(1).velocity = [0;0;0];
 
         % Uncomment for attractive force
-%         particles(1).position = [0.7;0.6;0.5];
-%         particles(1).color = "r";
-%         particles(1).velocity = [-0.01;0.02;0];
-%         particles(1).isnegative = true;
         particles(1).position = [0.7;0.6;0.5];
         particles(1).color = "b";
         particles(1).velocity = [0;0.01;0.01];
         particles(1).isnegative = true;
-%         particles(2).position = [0.7;0.6;0.5];
-%         particles(2).color = "r";
-%         particles(2).velocity = [-0.01;0.02;0.02];
-%         particles(2).isnegative = true;
     case "eDipole"
         particles(1).position = [0.5;0.5;0.8];
         particles(1).color = "r";
