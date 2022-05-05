@@ -1,11 +1,11 @@
 clf, clearvars, clc
 DT = 0.1;  % Time step
-T = 300;  % Total time for simulation, change between runs
+T = 50;  % Total time for simulation, change between runs
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
 
 % Choose between "charge", "eDipole", "current" and "mDipole"
-TYPE = "mDipole";
+TYPE = "eDipole";
 
 % Toggle this to see shadows for all particles on the sides of the box and
 % shadows for field object.
@@ -27,31 +27,29 @@ field_obj = generate_field_obj(TYPE);
 % characteristic behaviour
 switch TYPE
     case "charge"
-        % Place particles randomly on sphere surface
-        radius = 0.2;
-        for k=1:10
-            theta = pi*rand; phi = 2*pi*rand;
-            particles(k).position = field_obj.position + [radius*sin(theta)*cos(phi); radius*sin(theta)*sin(phi); radius*cos(theta)];
-            particles(k).velocity = [0; 0; 0];
-            cmap = hsv(100);
-            particles(k).color = cmap(k,:);
-        end
+        particles(1).position = [0.7;0.6;0.5];
+        particles(1).color = "r";
+        particles(1).velocity = [0;0;0];
     case "eDipole"
         particles(1).position = [0.5;0.5;0.8];
-        particles(1).color = "b";
+        particles(1).color = "r";
         particles(1).velocity = [0;0;0];
         particles(2).position = [0.5;0.5;0.2];
-        particles(2).color = "b";
+        particles(2).color = "r";
         particles(2).velocity = [0;0;0];
         particles(3).position = [0.8;0.5;0.5];
-        particles(3).color = "c";
+        particles(3).color = "r";
         particles(3).velocity = [0;0;0];
         particles(4).position = [0.5;0.8;0.5];
-        particles(4).color = "b";
+        particles(4).color = "r";
         particles(4).velocity = [0;0;0];
         particles(5).position = [0.5;0.2;0.5];
-        particles(5).color = "b";
+        particles(5).color = "r";
         particles(5).velocity = [0;0;0];
+        particles(6).position = [0.5;0.2;1];
+        particles(6).velocity = [0.08;0.02;-0.1];
+        particles(6).color = "g";
+
     case "current"
         % Uncomment this to have wire move with v=0.01 m/s in x.
         % particles(1).position = [0.2;0.5;0.5];
@@ -110,6 +108,9 @@ ax = initialize_axes(ax);
 
 % Uncomment for yz-plane view
 % view(90,0)
+
+% Uncomment for xy-plane view
+% view(0,90)
 
 % Plot particles and field object
 field_obj = plot_field_obj(ax,field_obj,PLOT_SHADOWS);
