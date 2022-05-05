@@ -1,11 +1,11 @@
 clf, clearvars, clc
 DT = 0.1;  % Time step
-T = 300;  % Total time for simulation, change between runs
+T = 50;  % Total time for simulation, change between runs
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
 
 % Choose between "charge", "eDipole", "current" and "mDipole"
-TYPE = "mDipole";
+TYPE = "charge";
 
 % Toggle this to see shadows for all particles on the sides of the box and
 % shadows for field object.
@@ -27,9 +27,24 @@ field_obj = generate_field_obj(TYPE);
 % characteristic behaviour
 switch TYPE
     case "charge"
+        % Uncomment for repulsive force
+%         particles(1).position = [0.7;0.6;0.5];
+%         particles(1).color = "r";
+%         particles(1).velocity = [0;0;0];
+
+        % Uncomment for attractive force
+%         particles(1).position = [0.7;0.6;0.5];
+%         particles(1).color = "r";
+%         particles(1).velocity = [-0.01;0.02;0];
+%         particles(1).isnegative = true;
         particles(1).position = [0.7;0.6;0.5];
-        particles(1).color = "r";
-        particles(1).velocity = [0;0;0];
+        particles(1).color = "b";
+        particles(1).velocity = [0;0.01;0.01];
+        particles(1).isnegative = true;
+%         particles(2).position = [0.7;0.6;0.5];
+%         particles(2).color = "r";
+%         particles(2).velocity = [-0.01;0.02;0.02];
+%         particles(2).isnegative = true;
     case "eDipole"
         particles(1).position = [0.5;0.5;0.8];
         particles(1).color = "r";
@@ -107,7 +122,7 @@ ax = initialize_axes(ax);
 % view(0,0)
 
 % Uncomment for yz-plane view
-view(90,0)
+% view(90,0)
 
 % Uncomment for xy-plane view
 % view(0,90)
