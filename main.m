@@ -1,11 +1,11 @@
 clf, clearvars, clc
 DT = 0.1;  % Time step
-T = 50;  % Total time for simulation, change between runs
+T = 300;  % Total time for simulation, change between runs
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
 
 % Choose between "charge", "eDipole", "current" and "mDipole"
-TYPE = "eDipole";
+TYPE = "mDipole";
 
 % Toggle this to see shadows for all particles on the sides of the box and
 % shadows for field object.
@@ -38,7 +38,7 @@ switch TYPE
         particles(2).color = "r";
         particles(2).velocity = [0;0;0];
         particles(3).position = [0.8;0.5;0.5];
-        particles(3).color = "r";
+        particles(3).color = "c";
         particles(3).velocity = [0;0;0];
         particles(4).position = [0.5;0.8;0.5];
         particles(4).color = "r";
@@ -70,7 +70,7 @@ switch TYPE
     case "mDipole"
         particles(1).position = [0.5;0.5;0.25];
         particles(1).velocity = [0;0;0.01];
-        particles(1).color = "c";
+        particles(1).color = "r";
 end
 
 % All other properties have default values and are the same regardless of
@@ -107,7 +107,7 @@ ax = initialize_axes(ax);
 % view(0,0)
 
 % Uncomment for yz-plane view
-% view(90,0)
+view(90,0)
 
 % Uncomment for xy-plane view
 % view(0,90)
