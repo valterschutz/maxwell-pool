@@ -12,11 +12,15 @@ switch field_obj.type
         q = field_obj.charge;
         F = 1/(4*pi*sqrt(epsilon_0))*(X-Y)*q/((X-Y)^2).^(3/2);
     case "eDipole"
-        D = vector_to_multivector(field_obj.dipolemoment);
+        P = vector_to_multivector(field_obj.dipolemoment);
         y = field_obj.position;
-        R=vector_to_multivector(x-y);
-        A=D*R+R*D;
-        F=1/(4*pi*sqrt(epsilon_0))*(3/2*(R)*(A)/((R^2).^(5/2))-D/((R^2).^(3/2)));
+        r = x-y;
+        R = vector_to_multivector(r);
+
+        % Define the inner product for a vector u and vector v
+        inner_product = @(u,v) 1/2*(u*v+v*u);
+
+        F=1/(4*pi*sqrt(epsilon_0))*(3*R*inner_product(P,R)/norm(r)^5-P/norm(r)^3);
     case "current"
         % First calculate where particle position is in xy-plane
         x(3) = 0; X = vector_to_multivector(x);

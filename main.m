@@ -5,7 +5,7 @@ PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
 
 % Choose between "charge", "eDipole", "current" and "mDipole"
-TYPE = "charge";
+TYPE = "eDipole";
 
 % Toggle this to see shadows for all particles on the sides of the box and
 % shadows for field object.
