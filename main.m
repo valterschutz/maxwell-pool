@@ -1,11 +1,11 @@
 clf, clearvars, clc
 DT = 0.1;  % Time step
-T = 50;  % Total time for simulation, change between runs
+T = 100;  % Total time for simulation, change between runs
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
 
 % Choose between "charge", "eDipole", "current" and "mDipole"
-TYPE = "eDipole";
+TYPE = "mDipole";
 
 % Toggle this to see shadows for all particles on the sides of the box and
 % shadows for field object.
@@ -16,7 +16,7 @@ PLOT_TRAJECTORY = true;
 
 % Save each frame in simulation and finally create a movie. Affects
 % performance drastically
-SAVE_MOVIE = false;
+SAVE_MOVIE = true;
 
 % Initialize field object. This will either be a point like electric
 % charge, electric dipole, magnetic dipole or current carrying wire
@@ -28,15 +28,15 @@ field_obj = generate_field_obj(TYPE);
 switch TYPE
     case "charge"
         % Uncomment for repulsive force
-%         particles(1).position = [0.7;0.6;0.5];
-%         particles(1).color = "r";
-%         particles(1).velocity = [0;0;0];
+        particles(1).position = [0.7;0.6;0.5];
+        particles(1).color = "r";
+        particles(1).velocity = [0;0;0];
 
         % Uncomment for attractive force
-        particles(1).position = [0.7;0.6;0.5];
-        particles(1).color = "b";
-        particles(1).velocity = [0;0.01;0.01];
-        particles(1).isnegative = true;
+%         particles(1).position = [0.7;0.6;0.5];
+%         particles(1).color = "b";
+%         particles(1).velocity = [0;0.01;0.01];
+%         particles(1).isnegative = true;
     case "eDipole"
         particles(1).position = [0.5;0.5;0.8];
         particles(1).color = "r";
@@ -114,7 +114,7 @@ ax = initialize_axes(ax);
 % view(0,0)
 
 % Uncomment for yz-plane view
-% view(90,0)
+view(90,0)
 
 % Uncomment for xy-plane view
 % view(0,90)
