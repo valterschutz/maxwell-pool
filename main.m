@@ -1,11 +1,11 @@
 clf, clearvars, clc
-DT = 0.1;  % Time step
-T = 100;  % Total time for simulation, change between runs
+DT = 0.1;  % Time step, usually 0.1
+T = 200;  % Total time for simulation, change between runs
 PARTICLE_MASS = 1e-3;  % 1 g
 PARTICLE_CHARGE = 1e-9;  % 1 nC
 
 % Choose between "charge", "eDipole", "current" and "mDipole"
-TYPE = "mDipole";
+TYPE = "current";
 
 % Toggle this to see shadows for all particles on the sides of the box and
 % shadows for field object.
@@ -16,7 +16,7 @@ PLOT_TRAJECTORY = true;
 
 % Save each frame in simulation and finally create a movie. Affects
 % performance drastically
-SAVE_MOVIE = true;
+SAVE_MOVIE = false;
 
 % Initialize field object. This will either be a point like electric
 % charge, electric dipole, magnetic dipole or current carrying wire
@@ -58,22 +58,28 @@ switch TYPE
         particles(6).color = "g";
 
     case "current"
-        % Uncomment this to have wire move with v=0.01 m/s in x.
+        % Uncomment this when wire moves with v=0.01 m/s in x.
         % particles(1).position = [0.2;0.5;0.5];
         % particles(1).velocity = [0.01;0;0];
         % particles(1).color = "c";
 
-        % Uncomment this to make wire stand still
-        particles(1).position = [0.5;0.5;0.5];
-        particles(1).velocity = [0;0;0.1];
-        particles(1).color = "r";
-        particles(2).position = [0.5;0.5;0.5];
-        particles(2).velocity = [0;0;0.1];
-        particles(2).color = "b";
-        particles(2).isnegative = true;
-        particles(3).position = [0.5;0.5;0.5];
-        particles(3).velocity = [0;0;0];
-        particles(3).color = "c";
+        % Uncomment this when wire stands still
+%         particles(1).position = [0.5;0.5;0.5];
+%         particles(1).velocity = [0;0;0.1];
+%         particles(1).color = "r";
+%         particles(2).position = [0.5;0.5;0.5];
+%         particles(2).velocity = [0;0;0.1];
+%         particles(2).color = "b";
+%         particles(2).isnegative = true;
+%         particles(3).position = [0.5;0.5;0.5];
+%         particles(3).velocity = [0;0;0];
+%         particles(3).color = "c";
+
+          % More interesting case...
+          field_obj.position = [0.5; 0.5; 0];
+          particles(1).position = [0.7;0.3;0.05];
+          particles(1).velocity = [0;0.05;0.1];
+          particles(1).color = "r";
     case "mDipole"
         particles(1).position = [0.5;0.5;0.25];
         particles(1).velocity = [0;0;0.01];
@@ -111,10 +117,10 @@ ax = gca;
 ax = initialize_axes(ax);
 
 % Uncomment for xz-plane view
-% view(0,0)
+view(0,0)
 
 % Uncomment for yz-plane view
-view(90,0)
+% view(90,0)
 
 % Uncomment for xy-plane view
 % view(0,90)
